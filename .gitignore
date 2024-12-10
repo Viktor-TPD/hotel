@@ -1,0 +1,5 @@
+.env
+*Zone.Identifyer
+vendor
+todo.md
+*.db
