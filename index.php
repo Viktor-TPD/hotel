@@ -10,22 +10,36 @@ $calendar->useMondayStartingDate();
 
 $rooms = queryFetchAssoc($db, "SELECT * FROM rooms;");
 // var_dump($rooms);
-echo $rooms[0]['type'];
+// echo "<pre>";
+// var_dump($_POST); //@debug
+// echo "</pre>";
+
+$bookings = queryFetchAssoc($db, "SELECT * FROM bookings;");
+// var_dump($bookings);
+$myDate = $bookings[0]['arrival_date'];
+$myDate = gmdate("Y-m-d", $myDate);
+echo $myDate;
+
 ?>
-
-
 <main>
-    <div>
-        <label for="name">Name</label>
-        <input type="text" name="name" id="name" placeholder="Enter your name...">
-    </div>
-    <div class="flexRow">
-        <small>Selected dates:&nbsp</small>
-        <small id="selectedDatesContainer"></small>
-    </div>
-    <div class="flexRow">
-        <small>Selected Room:&nbsp</small>
-        <small><?= $rooms[0]["type"] ?></small>
+    <form method="post" action='./app/posts/store.php'>
+
+        <div>
+            <label for="name">Name</label>
+            <input id="name" type="text" name="name" placeholder="Enter your name..." required>
+        </div>
+        <div class="flexRow">
+            <small>Selected dates:&nbsp</small>
+            <input id="selectedDatesContainer" class="uninteractable" type="text" name="selectedDates" required></input>
+        </div>
+        <div class="flexRow">
+            <small>Selected Room:&nbsp</small>
+            <input id="roomType" class="uninteractable" type="text" name="roomType" value="<?= $rooms[0]["type"] ?>"></input>
+        </div>
+        <button type="submit">Book!</button>
+
+    </form>
+
     </div>
 </main>
 <?php

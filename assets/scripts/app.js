@@ -31,6 +31,14 @@ for (let i of days) {
     selectedDaysArray.sort();
     selectedDaysArray.sort(compareNumbers);
     //THEN PUSH CONTENT TO CONTAINER
-    selectedDaysContainer.innerText = selectedDaysArray;
+    selectedDaysContainer.value = selectedDaysArray;
   });
+}
+
+// MAKE OBJECTS WITH CLASS "uninteractable" UNINTERACTABLE
+
+const uninteractableElement = document.getElementsByClassName("uninteractable");
+
+for (let j of uninteractableElement) {
+  j.addEventListener("keydown", (event) => event.preventDefault());
 }
