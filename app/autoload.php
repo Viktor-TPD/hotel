@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+// REQUIRE FUNCTIONS
+require_once __DIR__ . '/functions.php';
+
 // REQUIRE ALL AUTOLOADS
 require_once __DIR__ . '/../vendor/autoload.php';
 

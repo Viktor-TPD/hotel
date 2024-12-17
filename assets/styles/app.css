@@ -12,6 +12,6 @@
   --cal-red: #c23b22;
 }
 
-.formSelectedDates {
+.flexRow {
   display: flex;
 }
