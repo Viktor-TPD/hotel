@@ -1,0 +1,102 @@
+.calendar-selected {
+  transition: all 0.25s;
+  background-color: var(--surface-select);
+}
+
+.weekly-calendar {
+  min-width: 850px;
+}
+.calendar {
+  border-radius: 24px 24px 0 0;
+  background: var(--cal-teal);
+  color: #fff;
+  width: 100%;
+  font-family: Oxygen;
+  table-layout: fixed;
+}
+.calendar.purple {
+  background: var(--cal-purple);
+}
+.calendar.pink {
+  background: var(--cal-pink);
+}
+.calendar.orange {
+  background: var(--cal-orange);
+}
+.calendar.yellow {
+  background: var(--cal-yellow);
+}
+.calendar.green {
+  background: var(--cal-green);
+}
+.calendar.grey {
+  background: var(--cal-grey);
+}
+.calendar.blue {
+  background: var(--cal-blue);
+}
+.calendar-title th {
+  border-radius: 20px 20px 0 0;
+  font-size: 22px;
+  font-weight: 700;
+  padding: 20px;
+  text-align: center;
+  text-transform: uppercase;
+  background: rgba(0, 0, 0, 0.05);
+}
+.calendar-header th {
+  padding: 10px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.1);
+}
+.calendar tbody tr td {
+  text-align: center;
+  vertical-align: top;
+  width: 14.28%;
+}
+.calendar tbody tr td.pad {
+  background: rgba(255, 255, 255, 0.1);
+}
+.calendar tbody tr td.day div:first-child {
+  padding: 4px;
+  line-height: 17px;
+  height: 25px;
+}
+.calendar tbody tr td.day div:last-child {
+  font-size: 10px;
+  padding: 4px;
+  min-height: 25px;
+}
+.calendar tbody tr td.today {
+  background: rgba(0, 0, 0, 0.25);
+}
+.calendar tbody tr td.mask,
+.calendar tbody tr td.mask-end,
+.calendar tbody tr td.mask-start {
+  background: var(--cal-red);
+}
+.calendar .cal-weekview-time {
+  padding: 4px 2px 2px 4px;
+}
+.calendar .cal-weekview-time > div {
+  background: rgba(0, 0, 0, 0.03);
+  padding: 10px;
+  min-height: 50px;
+}
+.calendar .cal-weekview-event.mask-start,
+.calendar .cal-weekview-event.mask,
+.calendar .cal-weekview-event.mask-end {
+  background: var(--cal-red);
+  margin-bottom: 3px;
+  padding: 5px;
+}
+.calendar .cal-weekview-time-th {
+  background: rgba(0, 0, 0, 0.1);
+}
+.calendar .cal-weekview-time-th > div {
+  padding: 10px;
+  min-height: 50px;
+}
+.calendar .event-summary-row {
+  display: block;
+}

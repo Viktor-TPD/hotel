@@ -1,0 +1,17 @@
+:root {
+  --surface-select: chartreuse;
+  /* CALENDAR VARIABLES */
+  --cal-purple: #913ccd;
+  --cal-pink: #f15f74;
+  --cal-orange: #f76d3c;
+  --cal-yellow: #f7d842;
+  --cal-green: #98cb4a;
+  --cal-grey: #839098;
+  --cal-blue: #5481e6;
+  --cal-teal: #2ca8c2;
+  --cal-red: #c23b22;
+}
+
+.formSelectedDates {
+  display: flex;
+}

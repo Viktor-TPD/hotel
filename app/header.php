@@ -10,5 +10,6 @@ require_once __DIR__ . '/functions.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <!-- <link rel="stylesheet" href="../vendor/benhall14/php-calendar/html/css/calendar.css"> -->
+    <link rel="stylesheet" href="../assets/styles/app.css">
+    <link rel="stylesheet" href="../assets/styles/calendar.css">
 </head>
