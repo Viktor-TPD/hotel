@@ -3,25 +3,11 @@
 require_once __DIR__ . '/app/autoload.php';
 require_once __DIR__ . '/app/header.php';
 
-use benhall14\phpCalendar\Calendar as Calendar;
-
-$calendar = new Calendar(2025, 1);
-$calendar->useMondayStartingDate();
-
-$rooms = queryFetchAssoc($db, "SELECT * FROM rooms;");
-// var_dump($rooms);
-// echo "<pre>";
-// var_dump($_POST); //@debug
-// echo "</pre>";
-
-$bookings = queryFetchAssoc($db, "SELECT * FROM bookings;");
-// var_dump($bookings);
-$myDate = $bookings[0]['arrival_date'];
-$myDate = gmdate("Y-m-d", $myDate);
-echo $myDate;
-
 ?>
 <main>
+    <?php
+    printErrors();
+    ?>
     <form method="post" action='./app/posts/store.php'>
 
         <div>

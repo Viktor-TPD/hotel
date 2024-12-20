@@ -15,23 +15,28 @@ for (let i of days) {
   //@todo ADD LOGIC TO EXCLUDE DAYS THAT ARE NOT BOOKED
 
   i.addEventListener("mouseup", () => {
-    // @todo OR MAYBE, AN IF (!BOOKED) OR SOMETHING
-    i.classList.toggle("calendar-selected");
-    const child = i.firstElementChild;
-    console.log(child.textContent); //@debug
+    if (!i.classList.contains("booked")) {
+      // @todo OR MAYBE, AN IF (!BOOKED) OR SOMETHING
+      i.classList.toggle("calendar-selected");
+      const child = i.firstElementChild;
+      console.log(child.textContent); //@debug
 
-    if (!selectedDaysArray.includes(child.textContent)) {
-      //DAY IS SELECTED SO WE ADD IT
-      selectedDaysArray.push(child.textContent);
-    } else {
-      //DAY IS PREVIOUSLY SELECTED, SO WE REMOVE IT
-      selectedDaysArray.splice(selectedDaysArray.indexOf(child.textContent), 1);
+      if (!selectedDaysArray.includes(child.textContent)) {
+        //DAY IS SELECTED SO WE ADD IT
+        selectedDaysArray.push(child.textContent);
+      } else {
+        //DAY IS PREVIOUSLY SELECTED, SO WE REMOVE IT
+        selectedDaysArray.splice(
+          selectedDaysArray.indexOf(child.textContent),
+          1
+        );
+      }
+      //SORT THE ARRAY
+      selectedDaysArray.sort();
+      selectedDaysArray.sort(compareNumbers);
+      //THEN PUSH CONTENT TO CONTAINER
+      selectedDaysContainer.value = selectedDaysArray;
     }
-    //SORT THE ARRAY
-    selectedDaysArray.sort();
-    selectedDaysArray.sort(compareNumbers);
-    //THEN PUSH CONTENT TO CONTAINER
-    selectedDaysContainer.value = selectedDaysArray;
   });
 }
 
