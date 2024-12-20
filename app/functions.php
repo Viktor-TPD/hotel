@@ -7,10 +7,16 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 
 // EXECUTE QUERY
-function executeQuery(PDO $db, string $query)
+function executeQuery(PDO $db, string $query, array $parameters = [])
 {
     try {
         $statement = $db->prepare($query);
+
+        // SANITIZE INPUT
+        foreach ($parameters as $key => $value) {
+            $statement->bindValue($key, $value);
+        }
+
         $statement->execute();
         echo "Query executed successfully.\n";
     } catch (Exception $e) {
@@ -30,17 +36,26 @@ function executeQuery(PDO $db, string $query)
 // }
 
 // FETCH ALL (OR SINGLE IF YOU ADD A STRING TO THIRD ARGUMENT), RETURNS VALUE OF QUERY
-function queryFetchAssoc(PDO $db, string $query, string $fetchAll = "all")
+function queryFetchAssoc(PDO $db, string $query, array $parameters = [], string $fetchAll = "all")
 {
     try {
-        $result = $db->prepare($query);
-        $result->execute();
-        $value = ($fetchAll === "all") ? $result->fetchAll(PDO::FETCH_ASSOC) : $result->fetch(PDO::FETCH_ASSOC);
+        $statement = $db->prepare($query);
+
+        // SANITIZE INPUT
+        foreach ($parameters as $key => $value) {
+            $statement->bindValue($key, $value);
+        }
+
+        $statement->execute();
+
+        // FETCH OR FETCHALL BASED ON THE $fetchAll PARAMETER
+        $value = ($fetchAll === "all") ? $statement->fetchAll(PDO::FETCH_ASSOC) : $statement->fetch(PDO::FETCH_ASSOC);
         return $value;
     } catch (Exception $e) {
         echo "Error: " . $e->getMessage() . "\n";
     }
 }
+
 
 function calendarDatesToTimeStamp(string $selectedDates): array
 {
@@ -58,66 +73,69 @@ function calendarDatesToTimeStamp(string $selectedDates): array
 
 function rebuildDataBase(PDO $db)
 {
-    $tempQuery = "DROP TABLES *;";
-    executeQuery($db, $tempQuery);
-    $rebuildQuery =
-        [
-            "--ADMIN SETTINGS
-CREATE TABLE IF NOT EXISTS admin_settings (
-id INTEGER PRIMARY KEY AUTOINCREMENT,
-stars INTEGER NOT NULL,
-greeting_message VARCHAR(60) NOT NULL,
-image_url VARCHAR(200) NOT NULL
-);",
+    try {
+        $tempQuery = "DROP TABLES *;";
+        executeQuery($db, $tempQuery);
+        $rebuildQuery =
+            [
+                "--ADMIN SETTINGS
+            CREATE TABLE IF NOT EXISTS admin_settings (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                stars INTEGER NOT NULL,
+                greeting_message VARCHAR(60) NOT NULL,
+                image_url VARCHAR(200) NOT NULL
+                );",
 
-            "--ROOMS
-CREATE TABLE IF NOT EXISTS rooms (
-id INTEGER PRIMARY KEY AUTOINCREMENT,
-type VARCHAR(60) NOT NULL,
-price DECIMAL(10, 2) NOT NULL
-);",
+                "--ROOMS
+                CREATE TABLE IF NOT EXISTS rooms (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    type VARCHAR(60) NOT NULL,
+                    price DECIMAL(10, 2) NOT NULL
+                    );",
 
-            "-- AMENITIES
-CREATE TABLE IF NOT EXISTS amenities (
-id INTEGER PRIMARY KEY AUTOINCREMENT,
-type VARCHAR(60) NOT NULL,
-price DECIMA(10, 2) NOT NULL
-);",
+                "-- AMENITIES
+                    CREATE TABLE IF NOT EXISTS amenities (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        type VARCHAR(60) NOT NULL,
+                        price DECIMA(10, 2) NOT NULL
+                        );",
 
-            "--GUESTS
-CREATE TABLE IF NOT EXISTS guests (
-id INTEGER PRIMARY KEY AUTOINCREMENT,
-transfer_code VARCHAR(50) NOT NULL
-);",
+                "--GUESTS
+                        CREATE TABLE IF NOT EXISTS guests (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            transfer_code VARCHAR(50) NOT NULL
+                            );",
 
-            "--AMENITIES_GUESTS
-CREATE TABLE IF NOT EXISTS amenities_guests (
-id INTEGER PRIMARY KEY AUTOINCREMENT,
-amenities_id INTEGER NOT NULL,
-guests_id INTEGER NOT NULL,
-FOREIGN KEY (amenities_id) REFERENCES amenities(id),
-FOREIGN KEY (guests_id) REFERENCES guests_id
-);",
+                "--AMENITIES_GUESTS
+                            CREATE TABLE IF NOT EXISTS amenities_guests (
+                                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                amenities_id INTEGER NOT NULL,
+                                guests_id INTEGER NOT NULL,
+                                FOREIGN KEY (amenities_id) REFERENCES amenities(id),
+                                FOREIGN KEY (guests_id) REFERENCES guests(id)
+                                );",
 
-            "--BOOKINGS
-CREATE TABLE IF NOT EXISTS bookings (
-id INTEGER PRIMARY KEY AUTOINCREMENT,
-guests_id INTEGER NOT NULL,
-room_id INTEGER NOT NULL,
-room_price DECIMAL(10,2) NOT NULL,
-arrival_date VARCHAR(400) NOT NULL,
-total_price DECIMAL(10,2),
-FOREIGN KEY (guests_id) REFERENCES guests(id),
-FOREIGN KEY (room_id) REFERENCES rooms(id)
-);"
-        ];
-
-    foreach ($rebuildQuery as $query) {
-        executeQuery($db, $query);
+                "--BOOKINGS
+                                CREATE TABLE IF NOT EXISTS bookings (
+                                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                    guests_id INTEGER NOT NULL,
+                                    room_id INTEGER NOT NULL,
+                                    room_price DECIMAL(10,2) NOT NULL,
+                                    arrival_date VARCHAR(400) NOT NULL,
+                                    total_price DECIMAL(10,2),
+                                    FOREIGN KEY (guests_id) REFERENCES guests(id),
+                                    FOREIGN KEY (room_id) REFERENCES rooms(id)
+                                    );"
+            ];
+        foreach ($rebuildQuery as $query) {
+            executeQuery($db, $query);
+        }
+    } catch (Exception $e) {
+        $_SESSION['error'][] =  "Error: " . $e->getMessage() . "\n";
     }
-
     return;
 }
+// "INSERT INTO rooms (type, price) VALUES ('budget', 1), ('standard',2), ('luxury', 3);" //@debug
 
 function validateBookedDates(PDO $db): bool
 {

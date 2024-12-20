@@ -5,8 +5,6 @@ declare(strict_types=1);
 require __DIR__ . '/../autoload.php';
 
 // CHECK IF USER, FOR SOME REASON, MANAGED TO BOOK A BOOKED ROOM
-// FETCH BOOKED ROOMS
-
 if (validateBookedDates($db)) {
     // USER HAS SUBMITTED A BOOKED ROOM
     $_SESSION['error'][] = "Oops, someone already booked one of your rooms. Please try again.";
@@ -15,6 +13,8 @@ if (validateBookedDates($db)) {
 }
 
 // $features = $_POST['amenities'] ?? [];
+
+
 
 // CHECK AND SANITIZE
 if (!empty($_POST)) {
@@ -37,6 +37,14 @@ if (!empty($_POST)) {
     $room = htmlspecialchars($_POST['roomType']);
     $dates = htmlspecialchars($_POST['selectedDates']);
     $name = htmlspecialchars($_POST['name']);
+
+    // TAKE THEIR MONEY
+    // GET THE PRICE OF THE ROOM
+    $priceQuery = "SELECT price FROM rooms WHERE id=1";
+
+    $priceResult = queryFetchAssoc($db, $priceQuery, [], "");
+    die(var_dump($priceResult));
+
 
     //PREPARE STATEMENT (BOOKINGS GOES: id, guests, room_id, room_price, arrival_date, total_price)
     //@debug: LOTS OF PLACEHOLDER VALUES HERE
