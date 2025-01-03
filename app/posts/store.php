@@ -38,18 +38,21 @@ if (!empty($_POST)) {
     $dates = htmlspecialchars($_POST['selectedDates']);
     $name = htmlspecialchars($_POST['name']);
 
-    // TAKE THEIR MONEY
-    // GET THE PRICE OF THE ROOM
-    $priceQuery = "SELECT price FROM rooms WHERE id=1";
-
-    $priceResult = queryFetchAssoc($db, $priceQuery, [], "");
-    die(var_dump($priceResult));
-
+    // TAKE THEIR MONEY (@todo MAKE A FUNCTION?)
+    // GET THE PRICE OF THE ROOM TYPE THEY'VE BOOKED
+    $priceQuery = "SELECT price FROM rooms WHERE type = :roomType;";
+    $priceResult = queryFetchAssoc($db, $priceQuery, [':roomType' => $room], "");
+    // CALCULATE THE TOTAL COST
+    // GET NUMBER OF DAYS BOOKED
+    $tempArray = array_filter(explode(",", $dates));
+    $priceDateMultiplyer = count($tempArray);
+    // THEN MULTIPLY NUMBER OF DAYS WITH THE COST OF ROOM 
+    $totalPrice = $priceResult['price'] * $priceDateMultiplyer;
 
     //PREPARE STATEMENT (BOOKINGS GOES: id, guests, room_id, room_price, arrival_date, total_price)
     //@debug: LOTS OF PLACEHOLDER VALUES HERE
     $statement = "INSERT INTO bookings ('guests_id', 'room_id', 'room_price', 'arrival_date', 'total_price')
-    VALUES (1, 1, 1, '$dates', 1);";
+    VALUES (1, 1, 1, '$dates', '$totalPrice');";
     executeQuery($db, $statement);
 } else {
     $_SESSION['error'][] = "No data found";
