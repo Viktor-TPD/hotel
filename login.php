@@ -25,6 +25,10 @@
             <small class="form-text">Please provide the your password (passphrase).</small>
         </div>
 
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button type="submit">Login</button>
+    </form>
+    <form action="index.php">
+        <small>Not where you'd like to be?</small>
+        <button type="submit">Return Home</button>
     </form>
 </article>

@@ -12,7 +12,7 @@
     <?php
     } else {
     ?>
-        <a href="./login.php">Login</a>
+        <a href=<?= "/login.php"; ?>>Login</a>
     <?php
     }
     ?>
