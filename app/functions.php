@@ -125,7 +125,14 @@ function rebuildDataBase(PDO $db)
                                     total_price DECIMAL(10,2),
                                     FOREIGN KEY (guests_id) REFERENCES guests(id),
                                     FOREIGN KEY (room_id) REFERENCES rooms(id)
-                                    );"
+                                    );",
+                "--USERS
+                                        CREATE TABLE IF NOT EXISTS users(
+                                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                        name VARCHAR(60) NOT NULL,
+                                        email VARCHAR(120) NOT NULL,
+                                        password VARCHAR(120) NOT NULL
+                                        );"
             ];
         foreach ($rebuildQuery as $query) {
             executeQuery($db, $query);

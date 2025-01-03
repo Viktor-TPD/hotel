@@ -20,11 +20,7 @@ $db = new PDO('sqlite:' . __DIR__ . '/../app/database/hotel.db');
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 
-
-
-
-
-
+//ONLY LOAD CALENDAR WHEN WE'RE IN THE INDEX
 if (basename($_SERVER['PHP_SELF']) == 'index.php') {
     require_once __DIR__ . '/calendarHandler.php';
 }
