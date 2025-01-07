@@ -6,20 +6,20 @@
         <?php
         if (basename($_SERVER['PHP_SELF']) != 'admin.php') {
         ?>
-            <form action="/../admin.php">
+            <form action="<?= BASE_URL . '/../admin.php'; ?>">
                 <button type="submit">Go to Admin Page</button>
             </form>
 
         <?php
         }
         ?>
-        <form action="/app/users/logout.php">
+        <form action="<?= BASE_URL . '/app/users/logout.php'; ?>">
             <button type="submit">Logout</button>
         </form>
     <?php
     } else {
     ?>
-        <a href=<?= "/login.php"; ?>>Login</a>
+        <a href="<?= BASE_URL . '/login.php'; ?>">Login</a>
     <?php
     }
     ?>

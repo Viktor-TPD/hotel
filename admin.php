@@ -35,4 +35,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['rebuildDatabase'])) {
 <small>Current Money: </small>
 
 <?php
-require_once __DIR__ . "/footer.php";
+require_once __DIR__ . '/app/footer.php';

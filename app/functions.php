@@ -18,7 +18,7 @@ function executeQuery(PDO $db, string $query, array $parameters = [])
         }
 
         $statement->execute();
-        echo "Query executed successfully.\n";
+        // echo "Query executed successfully.\n";
     } catch (Exception $e) {
         echo "Error: " . $e->getMessage() . "\n";
     }
@@ -213,11 +213,11 @@ function makeDeposit(string $transferCode): bool
 
 function printErrors()
 {
-    foreach ($_SESSION['error'] as $error):
+    foreach ($_SESSION['errors'] as $error):
 ?> <p><?php echo $error; ?></p>
 <?php
     endforeach;
-    unset($_SESSION['error']);
+    unset($_SESSION['errors']);
 }
 
 // Validate transfercode on centralbank API (Thanks Max :))

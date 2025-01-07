@@ -8,14 +8,14 @@ require __DIR__ . '/../autoload.php';
 // CHECK IF USER, FOR SOME REASON, MANAGED TO BOOK A BOOKED ROOM
 if (validateBookedDates($db)) {
     // USER HAS SUBMITTED A BOOKED ROOM
-    $_SESSION['error'][] = "Oops, someone already booked one of your rooms. Please try again.";
-    header('Location: /');
+    $_SESSION['errors'][] = "Oops, someone already booked one of your rooms. Please try again.";
+    header('Location: ' . BASE_URL . '/index.php');
     exit;
 }
 // CHECK IF USER'S TRANSFER CODE IS VALID
 if (!isValidUuid($_POST['transferCode'])) {
-    $_SESSION['error'][] = "Oops, your transfer code is not in the proper format. Please try again.";
-    header('Location: /');
+    $_SESSION['errors'][] = "Oops, your transfer code is not in the proper format. Please try again.";
+    header('Location: ' . BASE_URL . '/index.php');
     exit;
 }
 
@@ -25,15 +25,15 @@ if (!isValidUuid($_POST['transferCode'])) {
 if (!empty($_POST)) {
     //CHECK IF ALL REQUIRED PARAMETERS ARE PRESENT @todo ADD THEM AS THEY COME ALONG
     if (!isset($_POST['name'], $_POST['selectedDates'], $_POST['roomType'], $_POST['transferCode'])) {
-        $_SESSION['error'][] = "Oops! You didn't fill out a field properly. Try again!";
-        header('Location: /');
+        $_SESSION['errors'][] = "Oops! You didn't fill out a field properly. Try again!";
+        header('Location: ' . BASE_URL . '/index.php');
         exit;
     }
 
     //CHECK IF ALL REQUIRED PARAMETERS ARE PRESENT @todo ADD THEM AS THEY COME ALONG
     if (empty($_POST['name']) || empty($_POST['selectedDates']) || empty($_POST['roomType']) || empty($_POST['transferCode'])) {
-        $_SESSION['error'][] = "Oops! You didn't fill out a field properly. Try again!";
-        header('Location: /');
+        $_SESSION['errors'][] = "Oops! You didn't fill out a field properly. Try again!";
+        header('Location: ' . BASE_URL . '/index.php');
         exit;
     }
 
@@ -56,15 +56,15 @@ if (!empty($_POST)) {
     $totalPrice = $priceResult['price'] * $priceDateMultiplyer;
     // VALIDATE THE TRANSFER CODE
     if (!validateTransferCode($transferCode, $totalPrice)) {
-        $_SESSION['error'][] = "Invalid transfer code, please try again.";
-        header('Location: /');
+        $_SESSION['errors'][] = "Invalid transfer code, please try again.";
+        header('Location: ' . BASE_URL . '/index.php');
         exit;
     }
     // CODE IS VALID, TAKE MONEY!
     makeDeposit($transferCode);
 } else {
-    $_SESSION['error'][] = "No data found";
-    header('Location: /');
+    $_SESSION['errors'][] = "No data found";
+    header('Location: ' . BASE_URL . '/index.php');
     exit;
 }
 // USER INPUTE IS GOOD! WRITE TO DATABASE...
@@ -93,5 +93,5 @@ $_SESSION['receipt'] = [
 ];
 $_SESSION['openReceipt'] = true;
 
-header('Location: /');
+header('Location: ' . BASE_URL . '/index.php');
 exit;

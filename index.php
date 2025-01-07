@@ -16,8 +16,7 @@ require_once __DIR__ . '/app/header.php';
         </script>
     <?php
     }
-
-    if (isset($_POST['errors'])) {
+    if (isset($_SESSION['errors'])) {
         printErrors();
     }
     $rooms[0]["type"] = "budget"; //@todo TEMP VALUE
