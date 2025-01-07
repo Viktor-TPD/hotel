@@ -78,6 +78,20 @@ $statement = "INSERT INTO bookings ('guests_id', 'guest_name', 'room_id', 'room_
     VALUES ('$guestId', '$name', '$room', '$priceResult[price]', '$dates', '$totalPrice');";
 executeQuery($db, $statement);
 
+// GIVE USER RECEIPT
+$_SESSION['receipt'] = [
+    'island' => 'islandName',
+    'hotel' => 'hotelName',
+    'arrival_date' => 'firstDay',
+    'departure_date' => 'lastDay',
+    'total_cost' => $totalPrice,
+    'additional_info' => [
+        'greeting' => 'greetingText',
+        'imageUrl' => 'url',
+        'totalDays' => 'totalDays',
+    ],
+];
+$_SESSION['openReceipt'] = true;
 
 header('Location: /');
 exit;

@@ -6,7 +6,7 @@
         <?php
         if (basename($_SERVER['PHP_SELF']) != 'admin.php') {
         ?>
-            <form action="/admin.php">
+            <form action="/../admin.php">
                 <button type="submit">Go to Admin Page</button>
             </form>
 

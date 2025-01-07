@@ -5,8 +5,21 @@ require_once __DIR__ . '/app/header.php';
 
 ?>
 <main>
+    <!-- SESSION/POST CHECKS -->
     <?php
-    printErrors();
+    if (isset($_SESSION['openReceipt'])) {
+        unset($_SESSION['openReceipt']);
+    ?>
+        <script type="text/javascript">
+            const win = window.open('./app/posts/receipt.php', '_blank');
+            win.focus();
+        </script>
+    <?php
+    }
+
+    if (isset($_POST['errors'])) {
+        printErrors();
+    }
     $rooms[0]["type"] = "budget"; //@todo TEMP VALUE
     ?>
     <form method="post" action='./app/posts/store.php'>

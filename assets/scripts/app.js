@@ -1,7 +1,7 @@
 console.log("Javascript connected!");
 
 // MAKE DAYS CLICKABLE ON CALENDAR
-const days = document.getElementsByClassName("day"); // @todo CHANGE THIS TO 'bookable' OR SIMILAR
+const days = document.getElementsByClassName("day");
 const selectedDaysContainer = document.getElementById("selectedDatesContainer");
 let selectedDaysArray = [];
 
@@ -13,13 +13,12 @@ function compareNumbers(a, b) {
 
 for (let i of days) {
   //@todo ADD LOGIC TO EXCLUDE DAYS THAT ARE NOT BOOKED
-
   i.addEventListener("mouseup", () => {
     if (!i.classList.contains("booked")) {
       // @todo OR MAYBE, AN IF (!BOOKED) OR SOMETHING
       i.classList.toggle("calendar-selected");
       const child = i.firstElementChild;
-      console.log(child.textContent); //@debug
+      // console.log(child.textContent); //@debug
 
       if (!selectedDaysArray.includes(child.textContent)) {
         //DAY IS SELECTED SO WE ADD IT
@@ -41,9 +40,7 @@ for (let i of days) {
 }
 
 // MAKE OBJECTS WITH CLASS "uninteractable" UNINTERACTABLE
-
 const uninteractableElement = document.getElementsByClassName("uninteractable");
-
 for (let j of uninteractableElement) {
   j.addEventListener("keydown", (event) => event.preventDefault());
 }
