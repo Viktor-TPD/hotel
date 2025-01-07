@@ -15,14 +15,21 @@ if (!isset($_SESSION['user'])) {
 }
 
 require_once __DIR__ . "/app/header.php";
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['rebuildDatabase'])) {
+    echo "Database rebuilt!";
+    rebuildDataBase($db);
+    unset($_POST['rebuildDatabase']);
+}
 ?>
 <form action="index.php">
     <button type="submit">Go Home</button>
 </form>
-<form action="">
-    <!-- @todo REBUILD DATABASE FUNCTIONALITY HERE -->
-    <small>Rebuild Database</small>
+
+<!-- @todo REBUILD DATABASE FUNCTIONALITY HERE -->
+<form method="POST">
+    <button type="submit" id="rebuildDatabase" name="rebuildDatabase">Rebuild Database</button>
 </form>
+
 
 <!-- @todo ADD THIS TOO -->
 <small>Current Money: </small>

@@ -74,8 +74,15 @@ function calendarDatesToTimeStamp(string $selectedDates): array
 function rebuildDataBase(PDO $db)
 {
     try {
-        $tempQuery = "DROP TABLES *;";
-        executeQuery($db, $tempQuery);
+        $tables = queryFetchAssoc($db, "SELECT name 
+        FROM sqlite_master 
+        WHERE type = 'table'");
+        foreach ($tables as $table) {
+            if ($table['name'] !== "sqlite_sequence") {
+                executeQuery($db, "DROP TABLE $table[name]");
+                echo $table['name'] . "dropped<br>";
+            }
+        }
         $rebuildQuery =
             [
                 "--ADMIN SETTINGS
@@ -119,6 +126,7 @@ function rebuildDataBase(PDO $db)
                                 CREATE TABLE IF NOT EXISTS bookings (
                                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                                     guests_id INTEGER NOT NULL,
+                                    guest_name text NOT NULL,
                                     room_id INTEGER NOT NULL,
                                     room_price DECIMAL(10,2) NOT NULL,
                                     arrival_date VARCHAR(400) NOT NULL,
@@ -126,13 +134,8 @@ function rebuildDataBase(PDO $db)
                                     FOREIGN KEY (guests_id) REFERENCES guests(id),
                                     FOREIGN KEY (room_id) REFERENCES rooms(id)
                                     );",
-                "--USERS
-                                        CREATE TABLE IF NOT EXISTS users(
-                                        id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                        name VARCHAR(60) NOT NULL,
-                                        email VARCHAR(120) NOT NULL,
-                                        password VARCHAR(120) NOT NULL
-                                        );"
+                "--INSERT DEFAULT ROOM DATA
+                INSERT INTO rooms (type, price) VALUES ('budget', 1), ('standard', 2), ('luxury', 3);"
             ];
         foreach ($rebuildQuery as $query) {
             executeQuery($db, $query);
@@ -143,6 +146,25 @@ function rebuildDataBase(PDO $db)
     return;
 }
 // "INSERT INTO rooms (type, price) VALUES ('budget', 1), ('standard',2), ('luxury', 3);" //@debug
+
+function getCurrentGuestId(PDO $db): int
+{
+    try {
+        $query = "SELECT MAX(id) as latest_guest FROM guests;";
+        $latestGuest = queryFetchAssoc($db, $query, [], "N");
+
+        // CHECK IF IT EXISTS
+        if (!isset($latestGuest['latest_guest'])) {
+            throw new Exception("Failed to fetch the latest guest ID.");
+        }
+
+        return (int)$latestGuest['latest_guest'];
+    } catch (Exception $e) {
+        // LOG ERROR
+        error_log("Error in getCurrentGuestId: " . $e->getMessage());
+        return 0;
+    }
+}
 
 function validateBookedDates(PDO $db): bool
 {
@@ -168,6 +190,27 @@ function validateBookedDates(PDO $db): bool
     }
 }
 
+// Deposit to centralbank
+function makeDeposit(string $transferCode): bool
+{
+    $client = new Client();
+
+    try {
+        $response = $client->post('https://www.yrgopelago.se/centralbank/deposit', [
+            'form_params' => [
+                'user' => 'Viktor',
+                'transferCode' => $transferCode,
+            ]
+        ]);
+        $data = json_decode($response->getBody()->getContents(), true);
+
+        return isset($data['status']) && $data['status'] === 'success';
+    } catch (RequestException $e) {
+        error_log('Error validating transfer code: ' . $e->getMessage());
+        return false;
+    }
+}
+
 function printErrors()
 {
     foreach ($_SESSION['error'] as $error):
@@ -177,7 +220,8 @@ function printErrors()
     unset($_SESSION['error']);
 }
 
-function validateTransferCode(string $transferCode, int $totalCost): array
+// Validate transfercode on centralbank API (Thanks Max :))
+function validateTransferCode(string $transferCode, int $totalCost): bool
 {
     $client = new Client();
 
@@ -190,25 +234,20 @@ function validateTransferCode(string $transferCode, int $totalCost): array
         ]);
         $data = json_decode($response->getBody()->getContents(), true);
 
-        // Return data from API source
-        if (isset($data['status']) && $data['status'] === 'success') {
-            return [
-                'status' => true,
-                'message' => 'Transfer code is valid.',
-                'data' => $data
-            ];
-        } else {
-            return [
-                'status' => false,
-                'message' => 'Transfer code is invalid or insufficient funds.',
-                'data' => $data
-            ];
-        }
+        return isset($data['status']) && $data['status'] === 'success';
     } catch (RequestException $e) {
-        return [
-            'status' => false,
-            'message' => 'Error processing request: ' . $e->getMessage(),
-            'data' => null
-        ];
+        error_log('Error validating transfer code: ' . $e->getMessage());
+        return false;
     }
+}
+
+// VALIDATE Uuid (Thanks Hans :))
+function isValidUuid(string $uuid): bool
+{
+
+    if (!is_string($uuid) || (preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/', $uuid) !== 1)) {
+        return false;
+    }
+
+    return true;
 }

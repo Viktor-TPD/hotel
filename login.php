@@ -14,15 +14,15 @@
 
     <form action="app/users/login.php" method="post">
         <div>
-            <label for="email" class="form-label">Email</label>
-            <input class="form-control" type="email" name="email" id="email" placeholder="example@email.com" required>
-            <small class="form-text">Please provide the your email address.</small>
+            <label for="email" class="form-label">Name</label>
+            <input class="form-control" type="text" name="name" id="name" placeholder="Admin name..." required>
+            <small class="form-text">Please provide your name.</small>
         </div>
 
         <div>
             <label for="password" class="form-label">Password</label>
-            <input class="form-control" type="password" name="password" id="password" required>
-            <small class="form-text">Please provide the your password (passphrase).</small>
+            <input class="form-control" type="password" name="password" id="password" placeholder="Admin password..." required>
+            <small class="form-text">Please provide your password.</small>
         </div>
 
         <button type="submit">Login</button>

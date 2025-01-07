@@ -1,6 +1,6 @@
 <article>
     <?php
-    if ($_SESSION['user']['name'] === "viktor") { //@todo MAKE THIS CHECK THE .env FILE FOR LIST OF ADMINS
+    if ($_SESSION['user']['name'] === $_ENV['ADMIN_NAME']) {
     ?>
         <p>You're logged in as admin. Hello, <?= $_SESSION['user']['name']; ?></p>
         <?php

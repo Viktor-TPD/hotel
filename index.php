@@ -7,6 +7,7 @@ require_once __DIR__ . '/app/header.php';
 <main>
     <?php
     printErrors();
+    $rooms[0]["type"] = "budget"; //@todo TEMP VALUE
     ?>
     <form method="post" action='./app/posts/store.php'>
 
@@ -22,6 +23,12 @@ require_once __DIR__ . '/app/header.php';
             <small>Selected Room:&nbsp</small>
             <input id="roomType" class="uninteractable" type="text" name="roomType" value="<?= $rooms[0]["type"] ?>"></input>
         </div>
+        <div class="flexRow">
+            <small>Transfer code:&nbsp</small>
+            <a href="https://www.yrgopelago.se/centralbank/start.php">Generate code here</a>
+            <input id="transferCode" type="text" name="transferCode" placeholder="Enter transfer code here..."></input>
+        </div>
+
         <button type="submit">Book!</button>
 
     </form>

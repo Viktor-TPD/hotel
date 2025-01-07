@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 require __DIR__ . '/../autoload.php';
 
+// EARLY ESCAPES:
 // CHECK IF USER, FOR SOME REASON, MANAGED TO BOOK A BOOKED ROOM
 if (validateBookedDates($db)) {
     // USER HAS SUBMITTED A BOOKED ROOM
@@ -11,22 +12,26 @@ if (validateBookedDates($db)) {
     header('Location: /');
     exit;
 }
+// CHECK IF USER'S TRANSFER CODE IS VALID
+if (!isValidUuid($_POST['transferCode'])) {
+    $_SESSION['error'][] = "Oops, your transfer code is not in the proper format. Please try again.";
+    header('Location: /');
+    exit;
+}
 
 // $features = $_POST['amenities'] ?? [];
-
-
 
 // CHECK AND SANITIZE
 if (!empty($_POST)) {
     //CHECK IF ALL REQUIRED PARAMETERS ARE PRESENT @todo ADD THEM AS THEY COME ALONG
-    if (!isset($_POST['name'], $_POST['selectedDates'], $_POST['roomType'])) {
+    if (!isset($_POST['name'], $_POST['selectedDates'], $_POST['roomType'], $_POST['transferCode'])) {
         $_SESSION['error'][] = "Oops! You didn't fill out a field properly. Try again!";
         header('Location: /');
         exit;
     }
 
     //CHECK IF ALL REQUIRED PARAMETERS ARE PRESENT @todo ADD THEM AS THEY COME ALONG
-    if (empty($_POST['name']) || empty($_POST['selectedDates']) || empty($_POST['roomType'])) {
+    if (empty($_POST['name']) || empty($_POST['selectedDates']) || empty($_POST['roomType']) || empty($_POST['transferCode'])) {
         $_SESSION['error'][] = "Oops! You didn't fill out a field properly. Try again!";
         header('Location: /');
         exit;
@@ -37,6 +42,7 @@ if (!empty($_POST)) {
     $room = htmlspecialchars($_POST['roomType']);
     $dates = htmlspecialchars($_POST['selectedDates']);
     $name = htmlspecialchars($_POST['name']);
+    $transferCode = htmlspecialchars($_POST['transferCode']);
 
     // TAKE THEIR MONEY (@todo MAKE A FUNCTION?)
     // GET THE PRICE OF THE ROOM TYPE THEY'VE BOOKED
@@ -48,15 +54,30 @@ if (!empty($_POST)) {
     $priceDateMultiplyer = count($tempArray);
     // THEN MULTIPLY NUMBER OF DAYS WITH THE COST OF ROOM 
     $totalPrice = $priceResult['price'] * $priceDateMultiplyer;
-
-    //PREPARE STATEMENT (BOOKINGS GOES: id, guests, room_id, room_price, arrival_date, total_price)
-    //@debug: LOTS OF PLACEHOLDER VALUES HERE
-    $statement = "INSERT INTO bookings ('guests_id', 'room_id', 'room_price', 'arrival_date', 'total_price')
-    VALUES (1, 1, 1, '$dates', '$totalPrice');";
-    executeQuery($db, $statement);
+    // VALIDATE THE TRANSFER CODE
+    if (!validateTransferCode($transferCode, $totalPrice)) {
+        $_SESSION['error'][] = "Invalid transfer code, please try again.";
+        header('Location: /');
+        exit;
+    }
+    // CODE IS VALID, TAKE MONEY!
+    makeDeposit($transferCode);
 } else {
     $_SESSION['error'][] = "No data found";
+    header('Location: /');
+    exit;
 }
+// USER INPUTE IS GOOD! WRITE TO DATABASE...
+// @debug: LOTS OF PLACEHOLDER VALUES HERE, ADD THEM PROPERLY!!
+// WRITE TO GUEST
+$statement = "INSERT INTO guests ('transfer_code') VALUES ('$transferCode');";
+executeQuery($db, $statement);
+$guestId = getCurrentGuestId($db);
+// PREPARE STATEMENT (BOOKINGS GOES: id, guests_id, guest_name, room_id, room_price, arrival_date, total_price)
+$statement = "INSERT INTO bookings ('guests_id', 'guest_name', 'room_id', 'room_price', 'arrival_date', 'total_price')
+    VALUES ('$guestId', '$name', '$room', '$priceResult[price]', '$dates', '$totalPrice');";
+executeQuery($db, $statement);
 
 
 header('Location: /');
+exit;
