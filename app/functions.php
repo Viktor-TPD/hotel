@@ -80,7 +80,7 @@ function rebuildDataBase(PDO $db)
         foreach ($tables as $table) {
             if ($table['name'] !== "sqlite_sequence") {
                 executeQuery($db, "DROP TABLE $table[name]");
-                echo $table['name'] . "dropped<br>";
+                echo $table['name'] . " dropped!<br>";
             }
         }
         $rebuildQuery =

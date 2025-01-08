@@ -1,0 +1,32 @@
+:root {
+  --button-base-size: 100px;
+}
+
+button,
+nav > div > a {
+  padding: 12.5px 30px;
+  border: 0;
+  border-radius: 100px;
+  background-color: #2ba8fb;
+  color: #ffffff;
+  font-weight: Bold;
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  text-decoration: none;
+  will-change: scale;
+}
+
+button:hover,
+nav > div > a:hover {
+  background-color: #088364;
+  transform: scale(1.02);
+}
+
+button:active,
+nav > div > a:active {
+  background-color: #14ac32;
+  transition: all 0.25s;
+  -webkit-transition: all 0.25s;
+  box-shadow: none;
+  transform: scale(0.98);
+}

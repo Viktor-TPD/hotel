@@ -3,24 +3,80 @@
 require_once __DIR__ . '/app/autoload.php';
 require_once __DIR__ . '/app/header.php';
 
+// SESSION/POST CHECKS
+
+$rooms[0]["type"] = "budget"; //@todo TEMP VALUE
+if (isset($_SESSION['openReceipt'])) {
+    unset($_SESSION['openReceipt']);
 ?>
+    <script type="text/javascript">
+        const win = window.open('./app/posts/receipt.php', '_blank');
+        win.focus();
+    </script>
+
+<?php
+}
+// PRINT ERRORS IF THERE ARE ANY
+if (isset($_SESSION['errors'])) {
+    printErrors();
+}
+?>
+
 <main>
-    <!-- SESSION/POST CHECKS -->
-    <?php
-    if (isset($_SESSION['openReceipt'])) {
-        unset($_SESSION['openReceipt']);
-    ?>
-        <script type="text/javascript">
-            const win = window.open('./app/posts/receipt.php', '_blank');
-            win.focus();
-        </script>
-    <?php
-    }
-    if (isset($_SESSION['errors'])) {
-        printErrors();
-    }
-    $rooms[0]["type"] = "budget"; //@todo TEMP VALUE
-    ?>
+    <article class="bgImage">
+        <img src="<?= BASE_URL . '/assets/images/hero.webp'; ?>" alt="">
+    </article>
+    <article class="hero flexRow">
+        <div class="textRight">
+            <h1>FOR DEGENERATES, VAGRANTS, AND YOU</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, mollitia incidunt quaerat vel minima accusantium
+                ad totam earum odio, quas repellendus iusto rerum consequatur adipisci saepe autem pariatur, praesentium nemo?</p>
+        </div>
+        <aside>
+            <img src="" alt="">
+        </aside>
+    </article>
+    <hr>
+    <article class="hero flexRow">
+        <aside>
+            <img src="" alt="">
+        </aside>
+        <div class="textLeft">
+            <h1>DEBAUCHERY FOR YOU AND THE ONES YOU LOVE</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, mollitia incidunt quaerat vel minima accusantium
+                ad totam earum odio, quas repellendus iusto rerum consequatur adipisci saepe autem pariatur, praesentium nemo?</p>
+        </div>
+    </article>
+    <hr>
+    <article class="ctaContainer">
+        <div class="flexRow cta">
+            <section>
+                <label>
+                    <p class="overlayText">Click to select</p>
+                    <input class="hideMe" type="radio" name="radio" checked="">
+                    <h2>WANDA'S DUNGEON</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta doloremque ab consequatur sequi autem temporibus nisi architecto. Voluptate temporibus nihil doloribus doloremque ratione dolorem placeat consequuntur reiciendis fugit! Nesciunt, ut.</p>
+                </label>
+            </section>
+            <section>
+                <label>
+                    <p class="overlayText">Click to select</p>
+                    <input class="hideMe" type="radio" name="radio" checked="">
+                    <h2>SEJDELN'S IMPORIUM</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta doloremque ab consequatur sequi autem temporibus nisi architecto. Voluptate temporibus nihil doloribus doloremque ratione dolorem placeat consequuntur reiciendis fugit! Nesciunt, ut.</p>
+                </label>
+            </section>
+            <section>
+                <label>
+                    <p class="overlayText">Click to select</p>
+                    <input class="hideMe" type="radio" name="radio" checked="">
+                    <h2>ROOM FIT FOR A KING AND QUEEN...'S HEAD</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta doloremque ab consequatur sequi autem temporibus nisi architecto. Voluptate temporibus nihil doloribus doloremque ratione dolorem placeat consequuntur reiciendis fugit! Nesciunt, ut.</p>
+                </label>
+            </section>
+        </div>
+        <button>Check availability</button>
+    </article>
     <form method="post" action='./app/posts/store.php'>
 
         <div>

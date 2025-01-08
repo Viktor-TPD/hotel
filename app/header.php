@@ -7,6 +7,7 @@
     <title>Hotel</title>
     <link rel="stylesheet" href="<?= BASE_URL; ?>/../assets/styles/app.css">
     <link rel="stylesheet" href="<?= BASE_URL; ?>/../assets/styles/calendar.css">
+    <link rel="stylesheet" href="<?= BASE_URL; ?>/../assets/styles/interactables.css">
 </head>
 
 <body>

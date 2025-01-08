@@ -67,9 +67,10 @@
   padding: 4px;
   min-height: 25px;
 }
-.calendar tbody tr td.today {
+/* WONT BE USING THIS SINCE WE'RE DOING ALL OF JANUARY */
+/* .calendar tbody tr td.today {
   background: rgba(0, 0, 0, 0.25);
-}
+} */
 .calendar tbody tr td.mask,
 .calendar tbody tr td.mask-end,
 .calendar tbody tr td.mask-start {

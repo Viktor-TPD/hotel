@@ -1,4 +1,5 @@
-<?php require __DIR__ . '/app/autoload.php'; ?>
+<?php require __DIR__ . '/app/autoload.php';
+require_once __DIR__ . '/app/header.php'; ?>
 
 <article>
     <h1>Login</h1>
@@ -29,3 +30,5 @@
         <button type="submit">Return Home</button>
     </form>
 </article>
+
+<?php require __DIR__ . '/app/footer.php';
