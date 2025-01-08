@@ -1,5 +1,5 @@
 <nav class="flexRow">
-    <p>Second Long Island</p>
+    <p>Second Long Island Inc. </p>
     <div class="flexRow">
         <?php
         if (isset($_SESSION['user']['name']) && $_SESSION['user']['name'] === $_ENV['ADMIN_NAME']) {

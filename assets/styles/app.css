@@ -93,7 +93,6 @@ nav > div > form {
   position: relative;
 }
 
-/* @todo ADD ANIMATION? */
 .cta > section > label > input:checked + * {
   outline: 0;
   border-color: #2260ff;
@@ -122,7 +121,8 @@ nav > div > form {
 }
 
 .overlayText {
-  text-align: center;
+  width: fit-content;
+  text-align: left;
   position: absolute;
   width: 100%;
   top: -5%;
@@ -131,12 +131,11 @@ nav > div > form {
   color: rgb(0, 0, 0);
   font-size: 24px;
   opacity: 0;
-  /* pointer-events: none; */
   transition: opacity 0.3s ease;
 }
 
 .cta > section:hover .overlayText {
-  opacity: 1; /* Show the text when hovered */
+  opacity: 1;
 }
 .ctaContainer > button {
   width: 80%;
@@ -155,6 +154,37 @@ nav > div > form {
 .calendarContainer > form {
   display: flex;
   flex-direction: column;
+}
+
+.calendarContainer > form * {
+  margin: 0.5rem;
+}
+
+.calendarContainer > form * > * {
+  width: 50%;
+}
+.calendarContainer > form > div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.calendarContainer > form > div > label,
+.calendarContainer > form > div > a,
+.calendarContainer > form > div > small {
+  width: 50%;
+}
+
+.calendarContainer > form > div > label,
+.calendarContainer > form > div > a,
+.calendarContainer > form > div > small,
+.calendarContainer > form > div > input {
+  font-size: 1.5rem;
+}
+
+#name,
+#transferCode {
+  border-radius: 8px;
+  border: #113182;
 }
 
 #selectedDatesContainer,
@@ -186,6 +216,10 @@ hr {
 
 .textRight {
   text-align: right;
+}
+
+.textCenter {
+  text-align: center;
 }
 
 .hideMe {

@@ -18,7 +18,7 @@ if (isset($_SESSION['openReceipt'])) {
 $roomNames = [
     'budget' => "WANDA'S DUNGEON",
     'standard' => "SEJDELN'S IMPORIUM",
-    'luxury' => "ROOM FIT FOR A KING AND QUEEN...'S HEAD"
+    'luxury' => "FIT FOR A KING'S HEAD"
 ];
 // PRINT ERRORS IF THERE ARE ANY
 if (isset($_SESSION['errors'])) {
@@ -93,24 +93,29 @@ if (isset($_POST['room_choice'])) {
 ?>
     <article class="calendarContainer">
         <form method="post" action='./app/posts/store.php'>
-            <h2>Booking a room at <?= $roomNames[$roomChoice] ?></h2>
-            <div>
-                <label for="name">Name</label>
+            <h2 class="textCenter">Booking a room at <?= $roomNames[$roomChoice] ?></h2>
+            <div class="flexRow">
+                <label for="name">Name:</label>
                 <input id="name" type="text" name="name" placeholder="Enter your name..." required>
             </div>
             <div class="flexRow">
-                <small>Selected dates:&nbsp</small>
+                <a href="https://www.yrgopelago.se/centralbank/start.php">Transfer Code:</a>
+                <input id="transferCode" type="text" name="transferCode" placeholder="Enter transfer code here..."></input>
+            </div>
+            <div class="flexRow">
+                <!-- @bug KNOWN ISSUE: SELECTING MORE THAN 10 DATES LOOKS BAD; IT CLIPS. SOLVE THIS. -->
+                <small>Selected dates:</small>
                 <input id="selectedDatesContainer" class="uninteractable" type="text" name="selectedDates" required></input>
             </div>
             <div class="flexRow">
-                <small>Room price class:&nbsp</small>
+                <small>Room price class:</small>
                 <input id="roomType" class="uninteractable" type="text" name="roomType" value="<?= $_POST['room_choice'] ?>"></input>
             </div>
             <div class="flexRow">
-                <small>Transfer code:&nbsp</small>
-                <a href="https://www.yrgopelago.se/centralbank/start.php">Generate code here</a>
-                <input id="transferCode" type="text" name="transferCode" placeholder="Enter transfer code here..."></input>
+                <small>Total price:</small>
+                <p id="totalPrice"><!-- @todo TOTAL PRICE GOES HERE --></p>
             </div>
+
 
             <button type="submit">Book!</button>
 
