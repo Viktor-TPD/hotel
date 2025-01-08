@@ -27,6 +27,7 @@ if (isset($_SESSION['errors'])) {
     <article class="bgImage">
         <img src="<?= BASE_URL . '/assets/images/hero.webp'; ?>" id="parallaxImage" alt="">
     </article>
+    <h1 class="heroHeadline">WELCOME TO SECOND LONG ISLAND</h1>
     <article class="hero flexRow">
         <div class="textRight">
             <h1>FOR DEGENERATES, VAGRANTS, AND YOU</h1>
@@ -81,34 +82,42 @@ if (isset($_SESSION['errors'])) {
         </article>
     </form>
 
-    <form method="post" action='./app/posts/store.php'>
-
-        <div>
-            <label for="name">Name</label>
-            <input id="name" type="text" name="name" placeholder="Enter your name..." required>
-        </div>
-        <div class="flexRow">
-            <small>Selected dates:&nbsp</small>
-            <input id="selectedDatesContainer" class="uninteractable" type="text" name="selectedDates" required></input>
-        </div>
-        <div class="flexRow">
-            <small>Selected Room:&nbsp</small>
-            <input id="roomType" class="uninteractable" type="text" name="roomType" value="<?= $_POST['room_choice'] ?>"></input>
-        </div>
-        <div class="flexRow">
-            <small>Transfer code:&nbsp</small>
-            <a href="https://www.yrgopelago.se/centralbank/start.php">Generate code here</a>
-            <input id="transferCode" type="text" name="transferCode" placeholder="Enter transfer code here..."></input>
-        </div>
-
-        <button type="submit">Book!</button>
-
-    </form>
-
     </div>
 </main>
 <?php
+if (isset($_POST['room_choice'])) {
+?>
+    <article class="calendarContainer">
+        <form method="post" action='./app/posts/store.php'>
 
-echo $calendar->draw(date('2025-01-01'));
+            <div>
+                <label for="name">Name</label>
+                <input id="name" type="text" name="name" placeholder="Enter your name..." required>
+            </div>
+            <div class="flexRow">
+                <small>Selected dates:&nbsp</small>
+                <input id="selectedDatesContainer" class="uninteractable" type="text" name="selectedDates" required></input>
+            </div>
+            <div class="flexRow">
+                <small>Selected Room:&nbsp</small>
+                <input id="roomType" class="uninteractable" type="text" name="roomType" value="<?= $_POST['room_choice'] ?>"></input>
+            </div>
+            <div class="flexRow">
+                <small>Transfer code:&nbsp</small>
+                <a href="https://www.yrgopelago.se/centralbank/start.php">Generate code here</a>
+                <input id="transferCode" type="text" name="transferCode" placeholder="Enter transfer code here..."></input>
+            </div>
 
+            <button type="submit">Book!</button>
+
+        </form>
+        <?php
+        $roomChoice = $_POST["room_choice"];
+        $calendar = drawCalendar($db, $roomChoice);
+        echo $calendar->draw(date('2025-01-01'));
+        ?>
+    </article>
+<?php
+}
+// echo $calendar->draw(date('2025-01-01'));
 require_once __DIR__ . '/app/footer.php';

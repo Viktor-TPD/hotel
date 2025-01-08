@@ -61,6 +61,11 @@ nav > div > form {
 }
 
 /* HERO */
+.heroHeadline {
+  font-size: 4rem;
+  text-align: center;
+}
+
 .hero {
   justify-content: center;
 }
@@ -88,6 +93,7 @@ nav > div > form {
   position: relative;
 }
 
+/* @todo ADD ANIMATION? */
 .cta > section > label > input:checked + * {
   outline: 0;
   border-color: #2260ff;

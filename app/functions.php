@@ -251,3 +251,37 @@ function isValidUuid(string $uuid): bool
 
     return true;
 }
+
+use benhall14\phpCalendar\Calendar as Calendar;
+
+function drawCalendar(PDO $db, string $roomChoice)
+{
+    // CREATE CALENDAR
+    $calendar = new Calendar(2025, 1);
+    $calendar->useMondayStartingDate();
+
+    // FETCH BOOKED ROOMS
+    $dateQuery = "SELECT arrival_date FROM bookings WHERE room_id = :roomChoice;";
+    $bookedDates = queryFetchAssoc($db, $dateQuery, [':roomChoice' => $roomChoice]);
+
+    // STANDARDIZE THE DATES
+    $standardizedBookedDates = array_map(
+        fn($bookedDate) => calendarDatesToTimeStamp($bookedDate['arrival_date']),
+        $bookedDates
+    );
+    // FLATTEN THE DATES
+    $allDates = is_array(reset($standardizedBookedDates))
+        ? array_merge(...$standardizedBookedDates)
+        : $standardizedBookedDates;
+
+    foreach ($allDates as $date) {
+        $calendar->addEvent(
+            $date,
+            $date,
+            "Booked",
+            true,
+            ['booked']
+        );
+    }
+    return $calendar;
+}
