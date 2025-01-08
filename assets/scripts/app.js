@@ -44,3 +44,10 @@ const uninteractableElement = document.getElementsByClassName("uninteractable");
 for (let j of uninteractableElement) {
   j.addEventListener("keydown", (event) => event.preventDefault());
 }
+
+// PARALLAX FOR BACKGROUND IMAGE
+window.addEventListener("scroll", function () {
+  const parallaxImage = document.getElementById("parallaxImage");
+  let offset = window.scrollY;
+  parallaxImage.style.top = offset * 0.3 + "px";
+});

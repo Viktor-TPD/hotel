@@ -20,11 +20,12 @@ if (isset($_SESSION['openReceipt'])) {
 if (isset($_SESSION['errors'])) {
     printErrors();
 }
+// echo $_POST["room_choice"]; //@debug
 ?>
 
 <main>
     <article class="bgImage">
-        <img src="<?= BASE_URL . '/assets/images/hero.webp'; ?>" alt="">
+        <img src="<?= BASE_URL . '/assets/images/hero.webp'; ?>" id="parallaxImage" alt="">
     </article>
     <article class="hero flexRow">
         <div class="textRight">
@@ -48,35 +49,38 @@ if (isset($_SESSION['errors'])) {
         </div>
     </article>
     <hr>
-    <article class="ctaContainer">
-        <div class="flexRow cta">
-            <section>
-                <label>
-                    <p class="overlayText">Click to select</p>
-                    <input class="hideMe" type="radio" name="radio" checked="">
-                    <h2>WANDA'S DUNGEON</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta doloremque ab consequatur sequi autem temporibus nisi architecto. Voluptate temporibus nihil doloribus doloremque ratione dolorem placeat consequuntur reiciendis fugit! Nesciunt, ut.</p>
-                </label>
-            </section>
-            <section>
-                <label>
-                    <p class="overlayText">Click to select</p>
-                    <input class="hideMe" type="radio" name="radio" checked="">
-                    <h2>SEJDELN'S IMPORIUM</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta doloremque ab consequatur sequi autem temporibus nisi architecto. Voluptate temporibus nihil doloribus doloremque ratione dolorem placeat consequuntur reiciendis fugit! Nesciunt, ut.</p>
-                </label>
-            </section>
-            <section>
-                <label>
-                    <p class="overlayText">Click to select</p>
-                    <input class="hideMe" type="radio" name="radio" checked="">
-                    <h2>ROOM FIT FOR A KING AND QUEEN...'S HEAD</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta doloremque ab consequatur sequi autem temporibus nisi architecto. Voluptate temporibus nihil doloribus doloremque ratione dolorem placeat consequuntur reiciendis fugit! Nesciunt, ut.</p>
-                </label>
-            </section>
-        </div>
-        <button>Check availability</button>
-    </article>
+    <form method="post" action="#radioButtons" id="radioButtons">
+        <article class="ctaContainer">
+            <div class="flexRow cta">
+                <section>
+                    <label>
+                        <p class="overlayText">Click to select</p>
+                        <input class="hideMe" type="radio" name="room_choice" value="budget">
+                        <h2>WANDA'S DUNGEON</h2>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta doloremque ab consequatur sequi autem temporibus nisi architecto. Voluptate temporibus nihil doloribus doloremque ratione dolorem placeat consequuntur reiciendis fugit! Nesciunt, ut.</p>
+                    </label>
+                </section>
+                <section>
+                    <label>
+                        <p class="overlayText">Click to select</p>
+                        <input class="hideMe" type="radio" name="room_choice" value="standard">
+                        <h2>SEJDELN'S IMPORIUM</h2>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta doloremque ab consequatur sequi autem temporibus nisi architecto. Voluptate temporibus nihil doloribus doloremque ratione dolorem placeat consequuntur reiciendis fugit! Nesciunt, ut.</p>
+                    </label>
+                </section>
+                <section>
+                    <label>
+                        <p class="overlayText">Click to select</p>
+                        <input class="hideMe" type="radio" name="room_choice" value="luxury">
+                        <h2>ROOM FIT FOR A KING AND QUEEN...'S HEAD</h2>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta doloremque ab consequatur sequi autem temporibus nisi architecto. Voluptate temporibus nihil doloribus doloremque ratione dolorem placeat consequuntur reiciendis fugit! Nesciunt, ut.</p>
+                    </label>
+                </section>
+            </div>
+            <button type="submit">Check availability</button>
+        </article>
+    </form>
+
     <form method="post" action='./app/posts/store.php'>
 
         <div>
@@ -89,7 +93,7 @@ if (isset($_SESSION['errors'])) {
         </div>
         <div class="flexRow">
             <small>Selected Room:&nbsp</small>
-            <input id="roomType" class="uninteractable" type="text" name="roomType" value="<?= $rooms[0]["type"] ?>"></input>
+            <input id="roomType" class="uninteractable" type="text" name="roomType" value="<?= $_POST['room_choice'] ?>"></input>
         </div>
         <div class="flexRow">
             <small>Transfer code:&nbsp</small>
@@ -104,6 +108,7 @@ if (isset($_SESSION['errors'])) {
     </div>
 </main>
 <?php
+
 echo $calendar->draw(date('2025-01-01'));
 
 require_once __DIR__ . '/app/footer.php';
