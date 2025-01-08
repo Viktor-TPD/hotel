@@ -97,12 +97,28 @@ nav > div > form {
 .cta > section > label > input:checked + * {
   outline: 0;
   border-color: #2260ff;
+  border-radius: 12px;
+  position: relative;
+}
+
+.cta > section > label > input:checked + *::before {
+  content: "";
+  position: absolute;
+  inset: 0;
   background: linear-gradient(
     90deg,
     rgba(68, 213, 24, 0.656) 0%,
     rgba(0, 0, 0, 0) 70%
   );
-  border-radius: 12px;
+  clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
+  animation: brushReveal 0.5s ease-out forwards;
+  z-index: -1;
+}
+
+@keyframes brushReveal {
+  to {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
 }
 
 .overlayText {
@@ -124,6 +140,28 @@ nav > div > form {
 }
 .ctaContainer > button {
   width: 80%;
+}
+
+/* BOOKING */
+.calendarContainer {
+  display: flex;
+  justify-content: center;
+  margin: 0 10%;
+  margin-top: 1rem;
+  background-color: var(--cal-blue);
+  border-radius: 0 24px 0;
+}
+
+.calendarContainer > form {
+  display: flex;
+  flex-direction: column;
+}
+
+#selectedDatesContainer,
+#roomType {
+  pointer-events: none;
+  background: none;
+  border: none;
 }
 
 /* MISC */

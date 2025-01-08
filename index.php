@@ -5,7 +5,6 @@ require_once __DIR__ . '/app/header.php';
 
 // SESSION/POST CHECKS
 
-$rooms[0]["type"] = "budget"; //@todo TEMP VALUE
 if (isset($_SESSION['openReceipt'])) {
     unset($_SESSION['openReceipt']);
 ?>
@@ -13,14 +12,18 @@ if (isset($_SESSION['openReceipt'])) {
         const win = window.open('./app/posts/receipt.php', '_blank');
         win.focus();
     </script>
-
 <?php
 }
+// ROOM NAMES
+$roomNames = [
+    'budget' => "WANDA'S DUNGEON",
+    'standard' => "SEJDELN'S IMPORIUM",
+    'luxury' => "ROOM FIT FOR A KING AND QUEEN...'S HEAD"
+];
 // PRINT ERRORS IF THERE ARE ANY
 if (isset($_SESSION['errors'])) {
     printErrors();
 }
-// echo $_POST["room_choice"]; //@debug
 ?>
 
 <main>
@@ -57,7 +60,7 @@ if (isset($_SESSION['errors'])) {
                     <label>
                         <p class="overlayText">Click to select</p>
                         <input class="hideMe" type="radio" name="room_choice" value="budget">
-                        <h2>WANDA'S DUNGEON</h2>
+                        <h2><?= $roomNames['budget']; ?></h2>
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta doloremque ab consequatur sequi autem temporibus nisi architecto. Voluptate temporibus nihil doloribus doloremque ratione dolorem placeat consequuntur reiciendis fugit! Nesciunt, ut.</p>
                     </label>
                 </section>
@@ -65,7 +68,7 @@ if (isset($_SESSION['errors'])) {
                     <label>
                         <p class="overlayText">Click to select</p>
                         <input class="hideMe" type="radio" name="room_choice" value="standard">
-                        <h2>SEJDELN'S IMPORIUM</h2>
+                        <h2><?= $roomNames['standard']; ?></h2>
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta doloremque ab consequatur sequi autem temporibus nisi architecto. Voluptate temporibus nihil doloribus doloremque ratione dolorem placeat consequuntur reiciendis fugit! Nesciunt, ut.</p>
                     </label>
                 </section>
@@ -73,7 +76,7 @@ if (isset($_SESSION['errors'])) {
                     <label>
                         <p class="overlayText">Click to select</p>
                         <input class="hideMe" type="radio" name="room_choice" value="luxury">
-                        <h2>ROOM FIT FOR A KING AND QUEEN...'S HEAD</h2>
+                        <h2><?= $roomNames['luxury']; ?></h2>
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta doloremque ab consequatur sequi autem temporibus nisi architecto. Voluptate temporibus nihil doloribus doloremque ratione dolorem placeat consequuntur reiciendis fugit! Nesciunt, ut.</p>
                     </label>
                 </section>
@@ -86,10 +89,11 @@ if (isset($_SESSION['errors'])) {
 </main>
 <?php
 if (isset($_POST['room_choice'])) {
+    $roomChoice = $_POST["room_choice"];
 ?>
     <article class="calendarContainer">
         <form method="post" action='./app/posts/store.php'>
-
+            <h2>Booking a room at <?= $roomNames[$roomChoice] ?></h2>
             <div>
                 <label for="name">Name</label>
                 <input id="name" type="text" name="name" placeholder="Enter your name..." required>
@@ -99,7 +103,7 @@ if (isset($_POST['room_choice'])) {
                 <input id="selectedDatesContainer" class="uninteractable" type="text" name="selectedDates" required></input>
             </div>
             <div class="flexRow">
-                <small>Selected Room:&nbsp</small>
+                <small>Room price class:&nbsp</small>
                 <input id="roomType" class="uninteractable" type="text" name="roomType" value="<?= $_POST['room_choice'] ?>"></input>
             </div>
             <div class="flexRow">
@@ -112,7 +116,6 @@ if (isset($_POST['room_choice'])) {
 
         </form>
         <?php
-        $roomChoice = $_POST["room_choice"];
         $calendar = drawCalendar($db, $roomChoice);
         echo $calendar->draw(date('2025-01-01'));
         ?>

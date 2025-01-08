@@ -15,10 +15,8 @@ for (let i of days) {
   //@todo ADD LOGIC TO EXCLUDE DAYS THAT ARE NOT BOOKED
   i.addEventListener("mouseup", () => {
     if (!i.classList.contains("booked")) {
-      // @todo OR MAYBE, AN IF (!BOOKED) OR SOMETHING
       i.classList.toggle("calendar-selected");
       const child = i.firstElementChild;
-      // console.log(child.textContent); //@debug
 
       if (!selectedDaysArray.includes(child.textContent)) {
         //DAY IS SELECTED SO WE ADD IT
