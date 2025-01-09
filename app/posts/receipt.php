@@ -1,8 +1,8 @@
 <?php
 
 declare(strict_types=1);
-
 require_once __DIR__ . "/../autoload.php";
 
-var_dump($_SESSION['receipt']); //@todo MAKE JSON FILE
+header('Content-Type: application/json');
+echo json_encode($_SESSION['receipt']);
 unset($_SESSION['receipt']);

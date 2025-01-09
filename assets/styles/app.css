@@ -19,10 +19,6 @@ body {
   padding: 0;
 }
 
-.flexRow {
-  display: flex;
-}
-
 /* HEADER */
 nav {
   align-items: center;
@@ -194,6 +190,16 @@ nav > div > form {
   border: none;
 }
 
+/* ERRORS */
+.errorContainer {
+  margin: 10%;
+  width: 100%;
+  background-color: #f15f74;
+  border-radius: 16px;
+  font-size: 2rem;
+  color: black;
+}
+
 /* MISC */
 hr {
   border: none;
@@ -228,4 +234,13 @@ hr {
   margin: 0;
   padding: 0;
   /* display: none; */
+}
+
+.flexRow {
+  display: flex;
+}
+
+.flexColumn {
+  display: flex;
+  flex-direction: column;
 }

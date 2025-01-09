@@ -6,7 +6,7 @@ require __DIR__ . '/../autoload.php';
 
 // EARLY ESCAPES:
 // CHECK IF USER, FOR SOME REASON, MANAGED TO BOOK A BOOKED ROOM
-if (validateBookedDates($db)) {
+if (validateBookedDates($db, $_POST['roomType'])) {
     // USER HAS SUBMITTED A BOOKED ROOM
     $_SESSION['errors'][] = "Oops, someone already booked one of your rooms. Please try again.";
     header('Location: ' . BASE_URL . '/index.php');
@@ -37,8 +37,16 @@ if (!empty($_POST)) {
         exit;
     }
 
-    //USER HAS ENTERED ALL REQUIRED INFO
-    //SANITIZE INPUT
+    // USER HAS ENTERED ALL REQUIRED INFO
+    // SOME HELP FOR THE ROOM TYPE
+    $roomToNumber =
+        [
+            'budget' => 1,
+            'standard' => 2,
+            'luxury' => 3
+        ];
+
+    // SANITIZE INPUT
     $room = htmlspecialchars($_POST['roomType']);
     $dates = htmlspecialchars($_POST['selectedDates']);
     $name = htmlspecialchars($_POST['name']);
@@ -75,7 +83,7 @@ executeQuery($db, $statement);
 $guestId = getCurrentGuestId($db);
 // PREPARE STATEMENT (BOOKINGS GOES: id, guests_id, guest_name, room_id, room_price, arrival_date, total_price)
 $statement = "INSERT INTO bookings ('guests_id', 'guest_name', 'room_id', 'room_price', 'arrival_date', 'total_price')
-    VALUES ('$guestId', '$name', '$room', '$priceResult[price]', '$dates', '$totalPrice');";
+    VALUES ('$guestId', '$name', '$roomToNumber[$room]', '$priceResult[price]', '$dates', '$totalPrice');";
 executeQuery($db, $statement);
 
 // GIVE USER RECEIPT

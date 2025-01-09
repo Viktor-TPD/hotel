@@ -166,10 +166,11 @@ function getCurrentGuestId(PDO $db): int
     }
 }
 
-function validateBookedDates(PDO $db): bool
+function validateBookedDates(PDO $db, string $roomType): bool
 {
-    $dateQuery = "SELECT arrival_date FROM bookings";
-    $bookedDates = queryFetchAssoc($db, $dateQuery);
+
+    $dateQuery = "SELECT arrival_date FROM bookings WHERE room_type = :room_type";
+    $bookedDates = queryFetchAssoc($db, $dateQuery, [':room_type' => $roomType]);
     $bookedRooms = [];
     foreach ($bookedDates as $item) {
         // EXPLODE ARRIVAL_DATE STRING INTO ARRAY, THEN MERGE WITH RESULT
@@ -214,7 +215,7 @@ function makeDeposit(string $transferCode): bool
 function printErrors()
 {
     foreach ($_SESSION['errors'] as $error):
-?> <p><?php echo $error; ?></p>
+?> <p class="error"><?php echo $error; ?></p>
 <?php
     endforeach;
     unset($_SESSION['errors']);
@@ -256,13 +257,20 @@ use benhall14\phpCalendar\Calendar as Calendar;
 
 function drawCalendar(PDO $db, string $roomChoice)
 {
+    $roomToNumber =
+        [
+            'budget' => 1,
+            'standard' => 2,
+            'luxury' => 3
+        ];
+
     // CREATE CALENDAR
     $calendar = new Calendar(2025, 1);
     $calendar->useMondayStartingDate();
 
     // FETCH BOOKED ROOMS
     $dateQuery = "SELECT arrival_date FROM bookings WHERE room_id = :roomChoice;";
-    $bookedDates = queryFetchAssoc($db, $dateQuery, [':roomChoice' => $roomChoice]);
+    $bookedDates = queryFetchAssoc($db, $dateQuery, [':roomChoice' => $roomToNumber[$roomChoice]]);
 
     // STANDARDIZE THE DATES
     $standardizedBookedDates = array_map(

@@ -20,10 +20,7 @@ $roomNames = [
     'standard' => "SEJDELN'S IMPORIUM",
     'luxury' => "FIT FOR A KING'S HEAD"
 ];
-// PRINT ERRORS IF THERE ARE ANY
-if (isset($_SESSION['errors'])) {
-    printErrors();
-}
+
 ?>
 
 <main>
@@ -84,7 +81,18 @@ if (isset($_SESSION['errors'])) {
             <button type="submit">Check availability</button>
         </article>
     </form>
-
+    <?php
+    // PRINT ERRORS IF THERE ARE ANY
+    if (isset($_SESSION['errors'])) {
+    ?>
+        <div class="errorContainer flexColumn">
+            <?php
+            printErrors();
+            ?>
+        </div>
+    <?php
+    }
+    ?>
     </div>
 </main>
 <?php

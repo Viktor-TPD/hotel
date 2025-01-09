@@ -55,7 +55,7 @@ for (let i of days) {
       selectedDaysArray.sort(compareNumbers);
 
       // UPDATE THE SELECTED DATES CONTAINER
-      selectedDaysContainer.value = selectedDaysArray.join(", ");
+      selectedDaysContainer.value = selectedDaysArray.join(",");
 
       // UPDATE THE PRICE
       const roomType = document.getElementById("roomType").value;
