@@ -35,7 +35,13 @@ Clone the repository on your local machine in an appropriate folder:
 Navigate to the folder:
 
 ```
-cd Hotel
+cd hotel/app
+```
+
+And create the folder "database".
+
+```
+mkdir database
 ```
 
 Start a local host in the folder and navigate to index.php to view the website.

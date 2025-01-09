@@ -8,9 +8,9 @@
   --cal-yellow: #f7d842;
   --cal-green: #98cb4a;
   --cal-grey: #839098;
-  --cal-blue: #5481e6;
+  --cal-blue: #5480e63f;
   --cal-teal: #2ca8c2;
-  --cal-red: #c23b22;
+  --cal-red: #bf5f4ec6;
 }
 
 html,
@@ -85,13 +85,16 @@ nav > div > form {
     rgba(0, 0, 0, 1) 70%,
     rgba(0, 0, 0, 1) 100%
   );
+  object-position: 0 50%;
+  object-fit: cover;
   mask-mode: match-source;
   mask-repeat: no-repeat;
   mask-size: cover;
   transition: filter 1s ease;
 }
 
-.hero > aside > img:hover {
+.hero > aside > img:hover,
+.roomImage:hover {
   filter: none;
 }
 /* #endregion */
@@ -157,6 +160,7 @@ nav > div > form {
 .ctaContainer > button {
   width: 80%;
 }
+
 /* #endregion */
 /* #region BOOKING */
 .calendarContainer {
@@ -165,7 +169,7 @@ nav > div > form {
   margin: 0 10%;
   margin-top: 1rem;
   background-color: var(--cal-blue);
-  border-radius: 0 24px 0;
+  border-radius: 0 24px 0 0;
 }
 
 .calendarContainer > form {
@@ -189,14 +193,16 @@ nav > div > form {
 
 .calendarContainer > form > div > label,
 .calendarContainer > form > div > a,
-.calendarContainer > form > div > small {
+.calendarContainer > form > div > small,
+.calendarContainer > form > div > p {
   width: 50%;
 }
 
 .calendarContainer > form > div > label,
 .calendarContainer > form > div > a,
 .calendarContainer > form > div > small,
-.calendarContainer > form > div > input {
+.calendarContainer > form > div > input,
+.calendarContainer > form > div > p {
   font-size: 1.5rem;
 }
 
@@ -211,6 +217,22 @@ nav > div > form {
   pointer-events: none;
   background: none;
   border: none;
+}
+
+.roomImage {
+  width: 80%;
+  padding: 0 10%;
+  max-height: 20rem;
+  object-position: 0 50%;
+  object-fit: cover;
+  mask-image: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 1) 70%,
+    rgba(0, 0, 0, 1) 100%
+  );
+  filter: grayscale(1);
+  transition: filter 1s ease;
 }
 /* #endregion */
 /* #region ERRORS AND CONFIRMATIONS */
@@ -242,7 +264,7 @@ nav > div > form {
 .bookingConfirmContainer > img {
   padding: 2.5rem;
   width: 33%;
-  border-radius: 16px;
+  border-radius: 70px;
   filter: grayscale(0.75);
 }
 
@@ -279,8 +301,10 @@ hr {
   text-align: center;
 }
 
+/* @todo RENAME THIS SOMETHING RELEVANT BUT SINCE IT'S ONLY USED BY <p> ELEMENTS I'M HIJACKING IT */
 .textJustify {
   text-align: justify;
+  font-size: 1.25rem;
 }
 
 .hideMe {

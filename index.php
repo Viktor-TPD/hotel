@@ -164,6 +164,10 @@ if (isset($_POST['room_choice'])) {
         echo $calendar->draw(date('2025-01-01'));
         ?>
     </article>
+    <article>
+        <img class="roomImage" src="<?= BASE_URL . '/assets/images/' . $roomChoice . '.jpg'; ?>" alt="">
+    </article>
+
 <?php
 }
 

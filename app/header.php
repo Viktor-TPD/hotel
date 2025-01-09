@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="<?= BASE_URL; ?>/../assets/styles/app.css">
     <link rel="stylesheet" href="<?= BASE_URL; ?>/../assets/styles/calendar.css">
     <link rel="stylesheet" href="<?= BASE_URL; ?>/../assets/styles/interactables.css">
+    <link rel="icon" type="image/x-icon" href="<?= BASE_URL; ?>/../assets/images/favicon.ico">
 </head>
 
 <body>
