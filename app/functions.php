@@ -169,8 +169,8 @@ function getCurrentGuestId(PDO $db): int
 function validateBookedDates(PDO $db, string $roomType): bool
 {
 
-    $dateQuery = "SELECT arrival_date FROM bookings WHERE room_type = :room_type";
-    $bookedDates = queryFetchAssoc($db, $dateQuery, [':room_type' => $roomType]);
+    $dateQuery = "SELECT arrival_date FROM bookings WHERE room_id = :room_id";
+    $bookedDates = queryFetchAssoc($db, $dateQuery, [':room_id' => $roomType]);
     $bookedRooms = [];
     foreach ($bookedDates as $item) {
         // EXPLODE ARRIVAL_DATE STRING INTO ARRAY, THEN MERGE WITH RESULT
