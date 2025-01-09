@@ -10,7 +10,7 @@ The following Composer packages have been used in the website:
 - [guzzlehttp/guzzle](https://github.com/guzzle/guzzle) - for fetching API endpoints
 - [benhall14/php-calendar](https://github.com/benhall14/php-calendar) - for building a calendar
 
-To check out the website live, visit: [Hotel de Pierrot](https://andreawingardh.se/clown-island).
+To check out the website live, visit: [Second Long Street](https://viktor-tpd.se/hotel/).
 
 ## Description
 
@@ -22,7 +22,7 @@ When the booking form is filled in and submitted, the dates are first checked ag
 
 Once the transfer code has been checked and the POST request is successful, the transfercode is deposited at https://www.yrgopelago.se/centralbank/deposit, the booking data is added to database.db and a .json-file is generated with all the relevant details from the booking. The user is then redirected back to the index.php page. This receipt can then be saved by the user in their logbook.
 
-![Robert de Niro](https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbTV2cW8xOHJyZTgzdXVocTZmbXdsM3NyNXplNDVxcWd5azhvNWNzNiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/LD7LJhWI2u1lqf5oUD/giphy.gif)
+![Simon Pegg](https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNThoZDIzOHFneGY2YTYyOTMxeG5tMmJyaDByb2FsbjRydHVpeWNraSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/QsyPRpG6WVR6SYfBVw/giphy.gif)
 
 ## Installation
 
