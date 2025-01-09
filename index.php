@@ -28,22 +28,32 @@ $roomNames = [
     <article class="hero flexRow">
         <div class="textRight">
             <h1>FOR DEGENERATES, VAGRANTS, AND YOU</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, mollitia incidunt quaerat vel minima accusantium
-                ad totam earum odio, quas repellendus iusto rerum consequatur adipisci saepe autem pariatur, praesentium nemo?</p>
+            <p class="textJustify">
+                On Andra Långgatan, where the air is thick with cigarette smoke and regret, we offer a place that’s
+                less a hotel and more a survival test with pillows. The walls? Thin enough to hear the guy next
+                door arguing with his soon-to-be ex. Our lobbies? A minimalist masterpiece featuring a vending machine
+                that probably has a soul. And the staff? Let’s just say they’ve seen it all and would rather not see you.
+                It’s not about comfort—it’s about proximity to the pub that might ruin your life tonight.
+                You’ll leave poorer, hungover, and questioning your choices. Just like everyone else here.</p>
         </div>
         <aside>
-            <img src="" alt="">
+            <img src="<?= BASE_URL . '/assets/images/aside1.jpg'; ?>" alt="">
         </aside>
     </article>
     <hr>
     <article class="hero flexRow">
         <aside>
-            <img src="" alt="">
+            <img src="<?= BASE_URL . '/assets/images/aside2.jpg'; ?>" alt="">
         </aside>
         <div class="textLeft">
             <h1>DEBAUCHERY FOR YOU AND THE ONES YOU LOVE</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, mollitia incidunt quaerat vel minima accusantium
-                ad totam earum odio, quas repellendus iusto rerum consequatur adipisci saepe autem pariatur, praesentium nemo?</p>
+            <p class="textJustify">
+                Bring the whole crew—or at least the ones who can hold their liquor and won’t embarrass you too much.
+                This joint is tailor-made for chaos in numbers: bachelor parties, divorce celebrations, or whatever
+                excuse you need to drink yourself stupid while someone films it. The rooms are big enough to fit
+                your poor decisions, and the bar downstairs doesn’t even pretend to cut you off. Got a family reunion?
+                Perfect. Nothing bonds you with Aunt Karen quite like watching her challenge a stranger to a tequila-off.
+                Here, debauchery isn’t just encouraged—it’s practically mandatory.</p>
         </div>
     </article>
     <hr>
@@ -55,7 +65,15 @@ $roomNames = [
                         <p class="overlayText">Click to select</p>
                         <input class="hideMe" type="radio" name="room_choice" value="budget">
                         <h2><?= $roomNames['budget']; ?></h2>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta doloremque ab consequatur sequi autem temporibus nisi architecto. Voluptate temporibus nihil doloribus doloremque ratione dolorem placeat consequuntur reiciendis fugit! Nesciunt, ut.</p>
+                        <p class="textJustify">
+                            Underneath the strip club where dreams go to die and dignity is a mere suggestion, we offer
+                            accommodations for those who aren’t faint of heart—or blessed with better options.
+                            Here, you can sip on our wildly overpriced, alcohol-free beer while reflecting on every
+                            life choice that led you to this exact moment. And don’t worry, the shame is
+                            complimentary—just like the view of the alley out back where someone is definitely
+                            losing a fight with a trash can. You didn’t come here for luxury; you came here because
+                            you were curious. Shame on you.
+                        </p>
                     </label>
                 </section>
                 <section>
@@ -63,7 +81,15 @@ $roomNames = [
                         <p class="overlayText">Click to select</p>
                         <input class="hideMe" type="radio" name="room_choice" value="standard">
                         <h2><?= $roomNames['standard']; ?></h2>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta doloremque ab consequatur sequi autem temporibus nisi architecto. Voluptate temporibus nihil doloribus doloremque ratione dolorem placeat consequuntur reiciendis fugit! Nesciunt, ut.</p>
+                        <p class="textJustify">
+                            Don’t let the atmosphere fool you—this is a haven where hardened criminals perfect their
+                            cloak-and-dagger routine and degenerate gamblers double down on their kid’s college fund
+                            for one more shot at Grodjakten glory. The clientele is a rogues’ gallery of questionable
+                            morals and worse judgment, but hey, that’s part of the charm.
+                            But for those brave (or reckless) enough to stay a night or two, the rewards are
+                            undeniable: unforgettable memories, dubious camaraderies, and stories you’ll never be
+                            able to tell in polite company. Thrilling, isn’t it?
+                        </p>
                     </label>
                 </section>
                 <section>
@@ -71,7 +97,15 @@ $roomNames = [
                         <p class="overlayText">Click to select</p>
                         <input class="hideMe" type="radio" name="room_choice" value="luxury">
                         <h2><?= $roomNames['luxury']; ?></h2>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta doloremque ab consequatur sequi autem temporibus nisi architecto. Voluptate temporibus nihil doloribus doloremque ratione dolorem placeat consequuntur reiciendis fugit! Nesciunt, ut.</p>
+                        <p class="textJustify">
+                            So, you want the fancy stuff? Sure, we’ve got the fancy stuff. Order a beer, and we’ll even
+                            throw in a buffet—just don’t ask too many questions about the corn. Word is, something
+                            happened to the corn. This fine establishment attracts a delightful mix of students too
+                            broke to care, vagrants riding out the storm, and folks whose luck ran out
+                            somewhere after the poliskravallerna of 2001. You’ll fit right in, whether you’re here for the questionable
+                            cuisine, the ambiance that smells faintly of regret, or just to remind yourself that
+                            rock bottom can still have a happy hour. Cheers to that!
+                        </p>
                     </label>
                 </section>
             </div>

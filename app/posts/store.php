@@ -59,9 +59,9 @@ if (!empty($_POST)) {
     // GET THE PRICE OF THE ROOM TYPE THEY'VE BOOKED
     $priceQuery = "SELECT price FROM rooms WHERE type = :roomType;";
     $priceResult = queryFetchAssoc($db, $priceQuery, [':roomType' => $room], "");
-    // CALCULATE THE TOTAL COST
     // GET NUMBER OF DAYS BOOKED
     $tempArray = array_filter(explode(",", $dates));
+    // CALCULATE THE TOTAL COST
     $priceDateMultiplyer = count($tempArray);
     // THEN MULTIPLY NUMBER OF DAYS WITH THE COST OF ROOM 
     $totalPrice = $priceResult['price'] * $priceDateMultiplyer;
