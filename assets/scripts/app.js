@@ -1,10 +1,9 @@
-console.log("Javascript connected!");
-
 // MAKE DAYS CLICKABLE ON CALENDAR
 const days = document.getElementsByClassName("day");
 const selectedDaysContainer = document.getElementById("selectedDatesContainer");
 let selectedDaysArray = [];
 
+let prices = {};
 // FOR THE PRICES LATER
 const priceDisplay = document.getElementById("totalPrice");
 
@@ -15,8 +14,6 @@ function compareNumbers(a, b) {
 }
 
 // FETCH PRICES FROM THE DATABASE
-let prices = {};
-
 // GET RELEVANT ROOM PRICE
 fetch("./app/posts/get-room-prices.php")
   .then((response) => response.json())
