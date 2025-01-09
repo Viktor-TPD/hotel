@@ -3,17 +3,14 @@
 require_once __DIR__ . '/app/autoload.php';
 require_once __DIR__ . '/app/header.php';
 
-// SESSION/POST CHECKS
-
-if (isset($_SESSION['openReceipt'])) {
-    unset($_SESSION['openReceipt']);
+if (!empty($_SESSION['openReceipt']) && isset($_SESSION['openReceipt'])) {
 ?>
     <script type="text/javascript">
-        const win = window.open('./app/posts/receipt.php', '_blank');
-        win.focus();
+        const win = window.open('./app/posts/receipt.php');
     </script>
 <?php
 }
+
 // ROOM NAMES
 $roomNames = [
     'budget' => "WANDA'S DUNGEON",
@@ -117,11 +114,11 @@ if (isset($_POST['room_choice'])) {
             </div>
             <div class="flexRow">
                 <small>Room price class:</small>
-                <input id="roomType" class="uninteractable" type="text" name="roomType" value="<?= $_POST['room_choice'] ?>"></input>
+                <input id="roomType" class="uninteractable" type="text" name="roomType" value="<?= $roomChoice ?>"></input>
             </div>
             <div class="flexRow">
                 <small>Total price:</small>
-                <p id="totalPrice"><!-- @todo TOTAL PRICE GOES HERE --></p>
+                <p id="totalPrice"><!--TOTAL PRICE GOES HERE --></p>
             </div>
 
 
@@ -135,5 +132,18 @@ if (isset($_POST['room_choice'])) {
     </article>
 <?php
 }
-// echo $calendar->draw(date('2025-01-01'));
+
+if (isset($_SESSION['openReceipt'])) {
+?>
+    <article class="bookingConfirmContainer">
+        <img src="<?= $_SESSION['receipt']['additional_info']['imageUrl'] ?>" alt="Actor Simon Pegg raises his glass in an English pub. The camera zooms in and he winks at you.">
+        <div>
+            <p class="bookingConfirm"><?= $_SESSION['receipt']['additional_info']['greeting'] ?></p>
+            <p class="bookingConfirm"><?= $_SESSION['receipt']['additional_info']['totalDays'] ?></p>
+            <p class="bookingConfirm">We've opened a new tab with your receipt.</p>
+        </div>
+    </article>
+<?php
+    unset($_SESSION['openReceipt']);
+}
 require_once __DIR__ . '/app/footer.php';

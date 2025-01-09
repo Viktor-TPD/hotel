@@ -39,11 +39,18 @@ if (!empty($_POST)) {
 
     // USER HAS ENTERED ALL REQUIRED INFO
     // SOME HELP FOR THE ROOM TYPE
+    //@todo THIS IS NOT DRY. WILL CHANGE APPROACH IF THERE'S TIME
     $roomToNumber =
         [
             'budget' => 1,
             'standard' => 2,
             'luxury' => 3
+        ];
+    $roomTypeToName =
+        [
+            'budget' => "Wanda's Dungeon",
+            'standard' => "Sejdeln's Imporium",
+            'luxury' => "FIT FOR A KING'S HEAD"
         ];
 
     // SANITIZE INPUT
@@ -82,24 +89,42 @@ $statement = "INSERT INTO guests ('transfer_code') VALUES ('$transferCode');";
 executeQuery($db, $statement);
 $guestId = getCurrentGuestId($db);
 // PREPARE STATEMENT (BOOKINGS GOES: id, guests_id, guest_name, room_id, room_price, arrival_date, total_price)
-$statement = "INSERT INTO bookings ('guests_id', 'guest_name', 'room_id', 'room_price', 'arrival_date', 'total_price')
-    VALUES ('$guestId', '$name', '$roomToNumber[$room]', '$priceResult[price]', '$dates', '$totalPrice');";
-executeQuery($db, $statement);
+$statement = "INSERT INTO bookings 
+    (guests_id, guest_name, room_id, room_price, arrival_date, total_price)
+    VALUES (:guests_id, :guest_name, :room_id, :room_price, :arrival_date, :total_price);";
+
+$parameters = [
+    ':guests_id' => $guestId,
+    ':guest_name' => $name,
+    ':room_id' => $roomToNumber[$room],
+    ':room_price' => $priceResult['price'],
+    ':arrival_date' => $dates,
+    ':total_price' => $totalPrice
+];
+// WRITE TO BOOKINGS
+executeQuery($db, $statement, $parameters);
 
 // GIVE USER RECEIPT
+// @todo SOME DATA HERE SHOULD BE SET IN THE DATABASE. WILL IMPLEMENT WHEN TIME IS AVAILABLE
+// PREPARE SOME VARIABLES
+$tempDates = explode(',', $dates);
+$arrivalDate = calendarDatesToTimeStamp($tempDates[0]);
+$departureDate = calendarDatesToTimeStamp(end($tempDates));
+$datesAmount = count($tempDates);
 $_SESSION['receipt'] = [
-    'island' => 'islandName',
-    'hotel' => 'hotelName',
-    'arrival_date' => 'firstDay',
-    'departure_date' => 'lastDay',
+    'island' => 'Second Long Island',
+    'hotel' => $roomTypeToName[$room],
+    'arrival_date' => $arrivalDate,
+    'departure_date' => $departureDate,
     'total_cost' => $totalPrice,
     'additional_info' => [
-        'greeting' => 'greetingText',
-        'imageUrl' => 'url',
-        'totalDays' => 'totalDays',
+        'greeting' => "Thank you for your booking. Enjoy your stay at our facilities on Second Long Island!",
+        'imageUrl' => 'https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNThoZDIzOHFneGY2YTYyOTMxeG5tMmJyaDByb2FsbjRydHVpeWNraSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/QsyPRpG6WVR6SYfBVw/giphy.gif',
+        'totalDays' => "We look forward to having you stay at $roomTypeToName[$room] for $datesAmount days.",
     ],
 ];
 $_SESSION['openReceipt'] = true;
+// $_SESSION['bookingComplete'] = true;
 
-header('Location: ' . BASE_URL . '/index.php');
+header('Location: ' . BASE_URL . '/index.php#radioButtons');
 exit;

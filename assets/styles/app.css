@@ -150,6 +150,8 @@ nav > div > form {
 .calendarContainer > form {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  min-width: 50%;
 }
 
 .calendarContainer > form * {
@@ -190,14 +192,42 @@ nav > div > form {
   border: none;
 }
 
-/* ERRORS */
+/* ERRORS AND CONFIRMATIONS */
 .errorContainer {
-  margin: 10%;
-  width: 100%;
+  margin: 2.5% 10% 2.5% 10%;
+  width: 80%;
   background-color: #f15f74;
   border-radius: 16px;
   font-size: 2rem;
   color: black;
+}
+
+.error {
+  padding: 0 1rem;
+}
+
+.bookingConfirmContainer {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  margin: 2.5% 10% 2.5% 10%;
+  width: 80%;
+  background-color: #5ff19443;
+  border-radius: 16px;
+  font-size: 2rem;
+  color: black;
+}
+
+.bookingConfirmContainer > img {
+  padding: 2.5rem;
+  width: 33%;
+  border-radius: 16px;
+  filter: grayscale(0.75);
+}
+
+.bookingConfirm {
+  padding: 0 1rem;
+  margin: 0.5rem auto;
 }
 
 /* MISC */
