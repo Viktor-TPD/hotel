@@ -25,14 +25,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['rebuildDatabase'])) {
     <button type="submit">Go Home</button>
 </form>
 
-<!-- @todo REBUILD DATABASE FUNCTIONALITY HERE -->
+<!-- REBULD DATABASE -->
 <form method="POST">
     <button type="submit" id="rebuildDatabase" name="rebuildDatabase">Rebuild Database</button>
 </form>
-
-
-<!-- @todo ADD THIS TOO -->
-<small>Current Money: </small>
 
 <?php
 require_once __DIR__ . '/app/footer.php';

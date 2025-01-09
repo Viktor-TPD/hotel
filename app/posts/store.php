@@ -9,37 +9,34 @@ require __DIR__ . '/../autoload.php';
 if (validateBookedDates($db, $_POST['roomType'])) {
     // USER HAS SUBMITTED A BOOKED ROOM
     $_SESSION['errors'][] = "Oops, someone already booked one of your rooms. Please try again.";
-    header('Location: ' . BASE_URL . '/index.php');
+    header('Location: ' . BASE_URL . '/index.php#radioButtons');
     exit;
 }
 // CHECK IF USER'S TRANSFER CODE IS VALID
 if (!isValidUuid($_POST['transferCode'])) {
     $_SESSION['errors'][] = "Oops, your transfer code is not in the proper format. Please try again.";
-    header('Location: ' . BASE_URL . '/index.php');
+    header('Location: ' . BASE_URL . '/index.php#radioButtons');
     exit;
 }
 
-// $features = $_POST['amenities'] ?? [];
-
 // CHECK AND SANITIZE
 if (!empty($_POST)) {
-    //CHECK IF ALL REQUIRED PARAMETERS ARE PRESENT @todo ADD THEM AS THEY COME ALONG
     if (!isset($_POST['name'], $_POST['selectedDates'], $_POST['roomType'], $_POST['transferCode'])) {
         $_SESSION['errors'][] = "Oops! You didn't fill out a field properly. Try again!";
-        header('Location: ' . BASE_URL . '/index.php');
+        header('Location: ' . BASE_URL . '/index.php#radioButtons');
         exit;
     }
 
-    //CHECK IF ALL REQUIRED PARAMETERS ARE PRESENT @todo ADD THEM AS THEY COME ALONG
+    //CHECK IF ALL REQUIRED PARAMETERS ARE PRESENT
     if (empty($_POST['name']) || empty($_POST['selectedDates']) || empty($_POST['roomType']) || empty($_POST['transferCode'])) {
         $_SESSION['errors'][] = "Oops! You didn't fill out a field properly. Try again!";
-        header('Location: ' . BASE_URL . '/index.php');
+        header('Location: ' . BASE_URL . '/index.php#radioButtons');
         exit;
     }
 
     // USER HAS ENTERED ALL REQUIRED INFO
-    // SOME HELP FOR THE ROOM TYPE
     //@todo THIS IS NOT DRY. WILL CHANGE APPROACH IF THERE'S TIME
+    // SOME HELP FOR THE ROOM TYPE
     $roomToNumber =
         [
             'budget' => 1,
@@ -59,7 +56,6 @@ if (!empty($_POST)) {
     $name = htmlspecialchars($_POST['name']);
     $transferCode = htmlspecialchars($_POST['transferCode']);
 
-    // TAKE THEIR MONEY (@todo MAKE A FUNCTION?)
     // GET THE PRICE OF THE ROOM TYPE THEY'VE BOOKED
     $priceQuery = "SELECT price FROM rooms WHERE type = :roomType;";
     $priceResult = queryFetchAssoc($db, $priceQuery, [':roomType' => $room], "");
@@ -72,18 +68,17 @@ if (!empty($_POST)) {
     // VALIDATE THE TRANSFER CODE
     if (!validateTransferCode($transferCode, $totalPrice)) {
         $_SESSION['errors'][] = "Invalid transfer code, please try again.";
-        header('Location: ' . BASE_URL . '/index.php');
+        header('Location: ' . BASE_URL . '/index.php#radioButtons');
         exit;
     }
     // CODE IS VALID, TAKE MONEY!
     makeDeposit($transferCode);
 } else {
     $_SESSION['errors'][] = "No data found";
-    header('Location: ' . BASE_URL . '/index.php');
+    header('Location: ' . BASE_URL . '/index.php#radioButtons');
     exit;
 }
 // USER INPUTE IS GOOD! WRITE TO DATABASE...
-// @debug: LOTS OF PLACEHOLDER VALUES HERE, ADD THEM PROPERLY!!
 // WRITE TO GUEST
 $statement = "INSERT INTO guests ('transfer_code') VALUES ('$transferCode');";
 executeQuery($db, $statement);
@@ -124,7 +119,6 @@ $_SESSION['receipt'] = [
     ],
 ];
 $_SESSION['openReceipt'] = true;
-// $_SESSION['bookingComplete'] = true;
 
 header('Location: ' . BASE_URL . '/index.php#radioButtons');
 exit;

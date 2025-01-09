@@ -1,6 +1,6 @@
-/* GLOBALS */
+/* #region GLOBALS */
 :root {
-  --surface-select: chartreuse;
+  --surface-select: rgba(76, 126, 27, 0.421);
   /* CALENDAR COLORS */
   --cal-purple: #913ccd;
   --cal-pink: #f15f74;
@@ -18,8 +18,8 @@ body {
   margin: 0;
   padding: 0;
 }
-
-/* HEADER */
+/* #endregion */
+/* #region HEADER */
 nav {
   align-items: center;
   justify-content: space-between;
@@ -35,8 +35,8 @@ nav > div > form {
   display: flex;
   align-items: center;
 }
-
-/* BACKGROUND IMAGE */
+/* #endregion */
+/* #region BACKGROUND IMAGE */
 .bgImage {
   /* TO OFFSET THE WHITE BORDER OF IMAGE'S BLUR: */
   background-color: black;
@@ -55,8 +55,8 @@ nav > div > form {
   min-height: 2000px;
   filter: blur(6.5px);
 }
-
-/* HERO */
+/* #endregion */
+/* #region HERO */
 .heroHeadline {
   font-size: 4rem;
   text-align: center;
@@ -73,8 +73,8 @@ nav > div > form {
   width: 40%;
   padding: 2rem;
 }
-
-/* CTA */
+/* #endregion */
+/* #region CTA */
 .ctaContainer {
   display: flex;
   flex-direction: column;
@@ -136,8 +136,8 @@ nav > div > form {
 .ctaContainer > button {
   width: 80%;
 }
-
-/* BOOKING */
+/* #endregion */
+/* #region BOOKING */
 .calendarContainer {
   display: flex;
   justify-content: center;
@@ -191,8 +191,8 @@ nav > div > form {
   background: none;
   border: none;
 }
-
-/* ERRORS AND CONFIRMATIONS */
+/* #endregion */
+/* #region ERRORS AND CONFIRMATIONS */
 .errorContainer {
   margin: 2.5% 10% 2.5% 10%;
   width: 80%;
@@ -229,8 +229,8 @@ nav > div > form {
   padding: 0 1rem;
   margin: 0.5rem auto;
 }
-
-/* MISC */
+/* #endregion */
+/* #region UTILITIES */
 hr {
   border: none;
   width: 100%;
@@ -263,7 +263,6 @@ hr {
   width: 0px;
   margin: 0;
   padding: 0;
-  /* display: none; */
 }
 
 .flexRow {
@@ -274,3 +273,4 @@ hr {
   display: flex;
   flex-direction: column;
 }
+/* #endregion */

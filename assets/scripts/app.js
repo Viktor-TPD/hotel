@@ -7,7 +7,6 @@ let selectedDaysArray = [];
 
 // FOR THE PRICES LATER
 const priceDisplay = document.getElementById("totalPrice");
-// document.querySelector(".flexRow:last-child").appendChild(priceDisplay);
 
 // THIS ALLOWS NUMBERS TO BE SORTED NOT IN "ALPHABETICAL" ORDER i.e.: [1,10,100,2,200,3]
 // BUT IN NUMERICAL ORDER i.e.: [1,2,3,10,100,200]
@@ -16,12 +15,12 @@ function compareNumbers(a, b) {
 }
 
 // FETCH PRICES FROM THE DATABASE
-let prices = {}; // Declare prices globally
+let prices = {};
 
+// GET RELEVANT ROOM PRICE
 fetch("./app/posts/get-room-prices.php")
   .then((response) => response.json())
   .then((data) => {
-    console.log("Price data:", data); // Debug Point 1
     prices = data.reduce(
       (acc, room) => ({
         ...acc,
@@ -29,7 +28,6 @@ fetch("./app/posts/get-room-prices.php")
       }),
       {}
     );
-    console.log("Processed prices:", prices); // Debug Point 2
   })
   .catch((error) => console.error("Fetch error:", error));
 
@@ -61,11 +59,6 @@ for (let i of days) {
       const roomType = document.getElementById("roomType").value;
       const totalPrice = selectedDaysArray.length * (prices[roomType] || 0);
       priceDisplay.textContent = `$${totalPrice}`;
-
-      // DEBUGGING OUTPUT
-      console.log("Selected Days:", selectedDaysArray);
-      console.log("Room Type:", roomType);
-      console.log("Total Price:", totalPrice);
     }
   });
 }

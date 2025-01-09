@@ -24,17 +24,6 @@ function executeQuery(PDO $db, string $query, array $parameters = [])
     }
 }
 
-//EXAMPLE:
-// SQL QUERIES
-// $queries = [
-//QUERIES (AS STRINGS) GOES HERE SEPARATED BY COMMAS
-// ];
-
-// EXECUTE
-// foreach ($queries as $query) {
-//     executeQuery($db, $query);
-// }
-
 // FETCH ALL (OR SINGLE IF YOU ADD A STRING TO THIRD ARGUMENT), RETURNS VALUE OF QUERY
 function queryFetchAssoc(PDO $db, string $query, array $parameters = [], string $fetchAll = "all")
 {
@@ -66,7 +55,6 @@ function calendarDatesToTimeStamp(string $selectedDates): array
         // ADD JANUARY'S DATE IN FRONT OF $date, ADD A 0 TO THE START OF SINGLE DIGITS
         $date = $date < 10 ? '2025-01-0' . $date : '2025-01-' . $date;
         $cleanedDates[] = $date;
-        // echo $date; //@debug
     }
     return $cleanedDates;
 }
@@ -74,15 +62,18 @@ function calendarDatesToTimeStamp(string $selectedDates): array
 function rebuildDataBase(PDO $db)
 {
     try {
+        // FIND ALL TABLES
         $tables = queryFetchAssoc($db, "SELECT name 
         FROM sqlite_master 
         WHERE type = 'table'");
         foreach ($tables as $table) {
+            // DROP EACH TABLE, EXCEPT 'sqlite_sequence'
             if ($table['name'] !== "sqlite_sequence") {
                 executeQuery($db, "DROP TABLE $table[name]");
                 echo $table['name'] . " dropped!<br>";
             }
         }
+        // REBUILD ALL TABLES
         $rebuildQuery =
             [
                 "--ADMIN SETTINGS
@@ -137,6 +128,7 @@ function rebuildDataBase(PDO $db)
                 "--INSERT DEFAULT ROOM DATA
                 INSERT INTO rooms (type, price) VALUES ('budget', 1), ('standard', 2), ('luxury', 3);"
             ];
+        // EXECUTE ALL QUERIES
         foreach ($rebuildQuery as $query) {
             executeQuery($db, $query);
         }
@@ -145,7 +137,6 @@ function rebuildDataBase(PDO $db)
     }
     return;
 }
-// "INSERT INTO rooms (type, price) VALUES ('budget', 1), ('standard',2), ('luxury', 3);" //@debug
 
 function getCurrentGuestId(PDO $db): int
 {
@@ -168,7 +159,7 @@ function getCurrentGuestId(PDO $db): int
 
 function validateBookedDates(PDO $db, string $roomType): bool
 {
-
+    // FIND RELEVANT BOOKED DATES
     $dateQuery = "SELECT arrival_date FROM bookings WHERE room_id = :room_id";
     $bookedDates = queryFetchAssoc($db, $dateQuery, [':room_id' => $roomType]);
     $bookedRooms = [];
