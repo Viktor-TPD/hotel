@@ -49,3 +49,21 @@ Start a local host in the folder and navigate to index.php to view the website.
 To create your own database, follow the instructions in [Database-queries.txt](/app/database/database-queries.txt).
 
 **Happy travels!**
+
+##Feedback
+
+Very well structured project with multiple different files handling different segments. Good looking site, nice error handling, and I'd definitely stay here.
+
+- store.php / row 54-57: You could have added a trim() around the htmlspecialchars() to avoid errors if someone accidentally adds a space.
+
+- store.php / row 83-84: The more secure practice of a "prepare"-statement could be used here for consistency.
+
+- index.php / row 15-19: Room names could have been stored and called upon from a different file to keep index.php cleaner.
+
+- index.php / row 25, 40, 46, 168: Alt texts could have a description to avoid accessibility issues.
+
+- index.php / row 145: Agreed, despite the economy nowadays, someone may want to visit your hotel for more than 10 days.
+
+- admin.php / row ?: For security reasons, you could add a timeout to log out the admin after a certain amount of time.
+
+- admin.php / row 17, 32, 42: Maybe keep your comments in a similar format to be more coherent, mainly for consistency.
